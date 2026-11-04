@@ -224,8 +224,8 @@ nav.top a.l{font-family:var(--sans);text-transform:none;letter-spacing:0;font-si
 <label>Nome e cognome<input id="l-name" autocomplete="name" maxlength="100" required></label>
 <label>Email<input id="l-email" type="email" autocomplete="email" maxlength="200" required></label>
 <label>Telefono (facoltativo)<input id="l-phone" type="tel" autocomplete="tel" maxlength="30"></label>
-<label>Partita IVA (facoltativa)<input id="l-vat" maxlength="20"></label>
-<label>Note (facoltative)<textarea id="l-msg" rows="2" maxlength="1000"></textarea></label>
+<label>Partita IVA<input id="l-vat" maxlength="20" required></label>
+<label>Note (facoltative, per esempio un altro taglio di traffico)<textarea id="l-msg" rows="2" maxlength="1000"></textarea></label>
 <label class="hp" aria-hidden="true">Sito web<input id="l-web" tabindex="-1" autocomplete="off"></label>
 <label class="chk"><input type="checkbox" id="l-priv"> Ho letto l'<a href="/privacy/">informativa privacy</a> e acconsento a essere ricontattato per questa richiesta.</label>
 </div>
@@ -326,7 +326,7 @@ const G={
 form:{l:'Formato',o:[['sim','SIM','SIM fisica multi-taglio, per router e dispositivi.'],['esim','eSIM','Si scarica sul dispositivo compatibile, nessuna spedizione.']]},
 net:{l:'Rete',o:[['4g','4G','Copertura più ampia, ideale per la maggior parte degli impianti.'],['5gu','5G Unlimited','Traffico illimitato in 5G per router e sedi, con CG-NAT o IP pubblico statico. Offerta a parte.'],['nb','NB-IoT','Pochi dati e batterie che durano anni: sensori e contatori.']]},
 ip:{l:'Indirizzo IP',o:[['cgn','CG-NAT','Il dispositivo esce su internet, non serve raggiungerlo.'],['priv','IP privato statico','Rete dedicata raggiungibile solo in VPN: la scelta più sicura.'],['pub','IP pubblico statico','Raggiungibile da internet, per accesso remoto diretto.']]},
-gb:{l:'Traffico',o:[['0.5','500 MB'],['1','1 GB'],['5','5 GB'],['10','10 GB'],['50','50 GB'],['100','100 GB'],['200','200 GB'],['300','300 GB'],['500','500 GB'],['1000','1 TB'],['pool','Pool','Un unico pacchetto di traffico condiviso tra tutte le SIM, fino a 5 TB al mese; oltre, su progetto.'],['unl','Illimitato','Traffico illimitato: solo con 5G Unlimited.']]},
+gb:{l:'Traffico',o:[['0.5','500 MB'],['1','1 GB'],['5','5 GB','Altri tagli, da 10 GB a 1 TB, su richiesta: scrivilo nelle note.'],['50','50 GB'],['pool','Pool','Un unico pacchetto di traffico condiviso tra tutte le SIM, fino a 5 TB al mese; oltre, su progetto.'],['unl','Illimitato','Traffico illimitato: solo con 5G Unlimited.']]},
 mg:{l:'Gestione',o:[['ka','Gestita da KonnectAlps','Router, configurazione e controllo da parte nostra.'],['self','In autonomia','Gestisci tu SIM e consumi dalla tua area.']]}};
 const S={form:'sim',net:'4g',ip:'priv',gb:'5',mg:'ka'};
 const USE={router:{form:'sim',net:'5gu',ip:'pub',gb:'unl',mg:'ka',q:1},cam:{form:'sim',net:'4g',ip:'priv',gb:'50',mg:'ka',q:2},gate:{form:'sim',net:'4g',ip:'priv',gb:'1',mg:'ka',q:1},fleet:{form:'esim',net:'4g',ip:'priv',gb:'pool',mg:'self',q:10},sensor:{form:'sim',net:'nb',ip:'priv',gb:'0.5',mg:'self',q:20}};
@@ -340,7 +340,7 @@ function draw(){
 if(S.net==='5gu'){S.gb='unl';if(S.ip==='priv')S.ip='pub'}else if(S.gb==='unl'){S.gb='5'}
 for(const k in G){document.querySelectorAll(`input[name="${k}"]`).forEach(i=>i.checked=i.value===S[k]);const o=name(k,S[k]);document.querySelector(`[data-h="${k}"]`).textContent=o[2]||''}
 if(S.net==='5gu'){document.querySelector('[data-h="ip"]').textContent='Con 5G Unlimited: CG-NAT o IP pubblico statico.'}
-if(S.net==='nb'&&['100','200','300','500','1000'].includes(S.gb)){document.querySelector('[data-h="gb"]').textContent='Con NB-IoT bastano pochi MB: valuta 500 MB o 1 GB.'}
+if(S.net==='nb'&&S.gb==='50'){document.querySelector('[data-h="gb"]').textContent='Con NB-IoT bastano pochi MB: valuta 500 MB o 1 GB.'}
 const n=q();
 const ipc={cgn:'CGNAT',priv:'IP-PRIV',pub:'IP-PUB'}[S.ip];
 $('#code').textContent=`KA-IOT · ${name('form',S.form)[1]} · ${name('net',S.net)[1]} · ${name('gb',S.gb)[1]} · ${ipc} · ${S.mg==='ka'?'MANAGED':'SELF'} · ×${n}`;
@@ -355,7 +355,7 @@ document.querySelectorAll('.uses button').forEach(b=>b.onclick=()=>{const u=USE[
 const API='https://console.alpstore.it/api/public/leads';
 $('#sendbtn').onclick=async()=>{
 const v=id=>($(id).value||'').trim(),out=$('#l-out');
-if(!v('#l-company')||!v('#l-name')||!v('#l-email')){out.textContent='Scrivi azienda, nome ed email.';return}
+if(!v('#l-company')||!v('#l-name')||!v('#l-email')||!v('#l-vat')){out.textContent='Scrivi azienda, nome, email e partita IVA.';return}
 if(!$('#l-priv').checked){out.textContent='Serve il consenso alla privacy.';return}
 const b=$('#sendbtn');b.disabled=true;out.textContent='Invio in corso…';
 try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company:v('#l-company'),name:v('#l-name'),email:v('#l-email'),phone:v('#l-phone'),vat:v('#l-vat'),message:v('#l-msg'),website:v('#l-web'),privacy:true,code:$('#code').textContent,config:{...S,qty:q()}})});
