@@ -152,6 +152,7 @@ nav.top a.l{font-family:var(--sans);text-transform:none;letter-spacing:0;font-si
 .lines{font-family:var(--sans)}
 .bt small{letter-spacing:.04em}
 @media (max-width:640px){.acc-m{font-size:13px;letter-spacing:0}}
+.lead{display:grid;gap:8px;margin:10px 0}.lead label{display:grid;gap:4px;font-size:13px}.lead input,.lead textarea{background:#0f0f0f;border:1px solid #2a2a2a;color:inherit;border-radius:10px;padding:9px 10px;font:inherit}.lead .chk{display:flex;gap:8px;align-items:flex-start}.lead .hp{position:absolute;left:-9999px}
 </style>
 </head>
 <body>
@@ -218,9 +219,20 @@ nav.top a.l{font-family:var(--sans);text-transform:none;letter-spacing:0;font-si
 <span class="over" style="font-size:11px">La tua configurazione</span>
 <div class="code" id="code">KA-IOT</div>
 <dl class="rows" id="rows"></dl>
-<a class="btn btn-p" id="send" href="#">Richiedi l'offerta &gt;</a>
+<div class="lead" id="lead">
+<label>Azienda<input id="l-company" autocomplete="organization" maxlength="160" required></label>
+<label>Nome e cognome<input id="l-name" autocomplete="name" maxlength="100" required></label>
+<label>Email<input id="l-email" type="email" autocomplete="email" maxlength="200" required></label>
+<label>Telefono (facoltativo)<input id="l-phone" type="tel" autocomplete="tel" maxlength="30"></label>
+<label>Partita IVA (facoltativa)<input id="l-vat" maxlength="20"></label>
+<label>Note (facoltative)<textarea id="l-msg" rows="2" maxlength="1000"></textarea></label>
+<label class="hp" aria-hidden="true">Sito web<input id="l-web" tabindex="-1" autocomplete="off"></label>
+<label class="chk"><input type="checkbox" id="l-priv"> Ho letto l'<a href="/privacy/">informativa privacy</a> e acconsento a essere ricontattato per questa richiesta.</label>
+</div>
+<button type="button" class="btn btn-p" id="sendbtn">Richiedi l'offerta &gt;</button>
+<p class="small" id="l-out" role="status"></p>
 <a class="btn btn-s" href="https://calendly.com/ezio-innocenti-konnectalps/30min" target="_blank" rel="noopener">Prenota una chiamata</a>
-<p class="small">Si apre la tua mail con la configurazione già scritta. Riservato a imprese ed enti con partita IVA.</p>
+<p class="small">Riservato a imprese ed enti con partita IVA. Preferisci l'email? <a id="send" href="#">Scrivici con la configurazione già pronta</a>.</p>
 </aside>
 </form>
 </div>
@@ -340,6 +352,17 @@ $('#qm').onclick=()=>{qn.value=Math.max(1,q()-1);draw()};
 $('#qp').onclick=()=>{qn.value=Math.min(10000,q()+1);draw()};
 qn.addEventListener('input',draw);qn.addEventListener('blur',()=>{qn.value=q();draw()});
 document.querySelectorAll('.uses button').forEach(b=>b.onclick=()=>{const u=USE[b.dataset.use];Object.assign(S,{form:u.form,net:u.net,ip:u.ip,gb:u.gb,mg:u.mg});qn.value=u.q;clearUse();b.setAttribute('aria-pressed','true');draw()});
+const API='https://console.alpstore.it/api/public/leads';
+$('#sendbtn').onclick=async()=>{
+const v=id=>($(id).value||'').trim(),out=$('#l-out');
+if(!v('#l-company')||!v('#l-name')||!v('#l-email')){out.textContent='Scrivi azienda, nome ed email.';return}
+if(!$('#l-priv').checked){out.textContent='Serve il consenso alla privacy.';return}
+const b=$('#sendbtn');b.disabled=true;out.textContent='Invio in corso…';
+try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company:v('#l-company'),name:v('#l-name'),email:v('#l-email'),phone:v('#l-phone'),vat:v('#l-vat'),message:v('#l-msg'),website:v('#l-web'),privacy:true,code:$('#code').textContent,config:{...S,qty:q()}})});
+if(r.ok){out.textContent='Richiesta inviata: ti ricontattiamo entro un giorno lavorativo.';return}
+const j=await r.json().catch(()=>({}));out.textContent=(j.error?`Non inviata: ${j.error}. `:'Non inviata. ')+'Puoi usare il link email qui sotto.'}
+catch(e){out.textContent='Non riusciamo a inviare adesso: usa il link email qui sotto.'}
+finally{b.disabled=false}};
 draw();
 })();
 </script>
