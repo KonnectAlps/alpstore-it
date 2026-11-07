@@ -399,7 +399,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 </aside>
 </section>
 </div>
-</main><template id="tp">
+</main><script src="/assets/qrcode.min.js"></script><template id="tp">
 
 <div style="background: #000000; color: #ffffff; font-family: 'KA Sans', 'DejaVu Sans', Verdana, sans-serif; font-size: 16px; line-height: 1.5;">
 
@@ -470,25 +470,41 @@ function mount(C,host,tp){var inst=new C({}),h=document.getElementById(host),t=d
 
 var Component=(function(){
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { cat: 'tutti', cart: { cam1: 2, sens1: 4 } }; }
+  constructor(p) { super(p); this.state = { cat: 'tutti', cart: { cam1: 2, sens1: 4 } }; try { const m = (location.hash || '').match(/r=([^&]+)/); if (m) { const o = JSON.parse(decodeURIComponent(escape(atob(m[1])))); if (o.cart) this.state.cart = o.cart; } } catch (e) {} }
   renderVals() {
-    const printDoc = (title, rows, who) => {
-      const esc = (x) => String(x).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    const printDoc = (title, rows, who, link) => {
+      const esc = (x) => String(x).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
       const now = new Date(); const pad = (n) => String(n).padStart(2, '0');
       const num = 'AS-' + now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) + '-' + pad(now.getHours()) + pad(now.getMinutes());
       const data = pad(now.getDate()) + '/' + pad(now.getMonth() + 1) + '/' + now.getFullYear();
+      let qr = '';
+      try { if (link && typeof qrcode === 'function') { const q = qrcode(0, 'M'); q.addData(link); q.make(); qr = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); } } catch (e) { qr = ''; }
       const w = window.open('', '_blank'); if (!w) return;
-      w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>' + esc(title) + ' ' + num + '</title><style>body{font-family:Verdana,sans-serif;color:#111;margin:40px;max-width:760px}h1{font-size:24px;margin:0 0 4px}.m{color:#555;font-size:13px}.b{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #c4dfd8;padding-bottom:14px;margin-bottom:22px}.l{font-weight:700;font-size:22px}.l span{color:#5a8f80}table{width:100%;border-collapse:collapse;margin:8px 0 20px}td{border-bottom:1px solid #ddd;padding:9px 6px;vertical-align:top;font-size:14px}td:first-child{color:#555;width:34%}h2{font-size:15px;margin:22px 0 6px}.n{background:#f2f7f5;border-radius:8px;padding:12px 14px;font-size:13px}@media print{body{margin:18mm}}</style></head><body>' +
-        '<div class="b"><div><div class="l">AlpStore<span>.</span></div><div class="m">by KonnectAlps S.r.l. · Via Praga 5, 38121 Trento · P.IVA 02805640220</div></div><div class="m" style="text-align:right">Richiesta n. ' + num + '<br>' + data + '</div></div>' +
-        '<h1>' + esc(title) + '</h1><p class="m">Riepilogo della richiesta preparata sul sito alpstore.it</p>' +
-        '<h2>Il progetto</h2><table>' + rows.map((r) => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') + '</table>' +
-        '<h2>Richiedente</h2><table>' + who.map((r) => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1] || '—') + '</td></tr>').join('') + '</table>' +
-        '<div class="n"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro un giorno lavorativo. Tutto arriva configurato, protetto e nel monitoraggio.<br>Contatti: 0471 840048 · commerciale@konnectalps.it</div>' +
-        '<p class="m" style="margin-top:18px">Questo documento non è un’offerta né un contratto: prezzi e condizioni sono quelli dell’offerta che riceverai.</p>' +
-        '<script>window.onload=function(){window.print()}<\/script></body></html>');
+      const tr = (r) => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1] || '—') + '</td></tr>';
+      w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>' + esc(title) + ' ' + num + '</title><style>' +
+        '@font-face{font-family:KA;src:url(/fonts/ka-sans-400.woff2)}@font-face{font-family:KA;src:url(/fonts/ka-sans-700.woff2);font-weight:700}@font-face{font-family:KM;src:url(/fonts/ka-mono-400.woff2)}' +
+        '@page{size:A4;margin:0}*{box-sizing:border-box}html,body{margin:0;background:#000;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}' +
+        'body{font-family:KA,"DejaVu Sans",Verdana,sans-serif;padding:16mm 16mm 14mm;min-height:297mm;max-width:210mm;margin:0 auto}' +
+        '.top{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #2a2a2a}.lg{display:flex;align-items:center;gap:10px}.mk{width:34px;height:34px;border-radius:50%;background:#c4dfd8;color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}' +
+        '.nm{font-weight:700;font-size:22px}.nm i{font-style:normal;color:#c4dfd8}.ov{font-family:KM,monospace;font-size:10px;letter-spacing:.18em;color:#c4dfd8;text-transform:uppercase}.mu{color:#8c8c8c;font-size:12px}' +
+        'h1{font-size:30px;line-height:1.1;margin:26px 0 4px}.sl{color:#c4dfd8;font-size:14px;margin:0 0 22px}' +
+        '.grid{display:flex;gap:18px;align-items:flex-start}.main{flex:1}.card{background:#111;border:1px solid #2a2a2a;border-radius:14px;padding:14px 16px;margin-bottom:14px}' +
+        'table{width:100%;border-collapse:collapse}td{padding:8px 0;border-bottom:1px solid #222;font-size:13px;vertical-align:top}tr:last-child td{border-bottom:0}td:first-child{color:#8c8c8c;width:36%}' +
+        '.qr{width:150px;flex:none;text-align:center}.qr .bx{background:#fff;border-radius:12px;padding:10px}.qr svg{width:100%;height:auto;display:block}.qr p{font-size:11px;color:#bdbdbd;margin:8px 0 0}' +
+        '.nx{background:#16201d;border:1px solid #2f3f3a;border-radius:14px;padding:14px 16px;font-size:13px;color:#d8ebe5}.ft{margin-top:22px;padding-top:12px;border-top:1px solid #2a2a2a;display:flex;justify-content:space-between;gap:12px}' +
+        '</style></head><body>' +
+        '<div class="top"><div class="lg"><div class="mk">Λ</div><div><div class="nm">AlpStore<i>.</i></div><div class="mu">by KonnectAlps</div></div></div><div style="text-align:right"><div class="ov">Richiesta</div><div style="font-family:KM,monospace;font-size:14px;margin-top:2px">' + num + '</div><div class="mu">' + data + '</div></div></div>' +
+        '<h1>' + esc(title) + '</h1><p class="sl">Configurato da noi. Controllato da te.</p>' +
+        '<div class="grid"><div class="main"><div class="card"><div class="ov" style="margin-bottom:6px">Il progetto</div><table>' + rows.map(tr).join('') + '</table></div>' +
+        '<div class="card"><div class="ov" style="margin-bottom:6px">Richiedente</div><table>' + who.map(tr).join('') + '</table></div></div>' +
+        (qr ? '<div class="qr"><div class="bx">' + qr + '</div><p>Inquadra per riaprire questa richiesta sul sito</p></div>' : '') + '</div>' +
+        '<div class="nx"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro un giorno lavorativo. Tutto arriva configurato, protetto e nel monitoraggio.</div>' +
+        '<div class="ft"><div class="mu">0471 840048 · commerciale@konnectalps.it · alpstore.it</div><div class="mu">KonnectAlps S.r.l. · Via Praga 5, 38121 Trento · P.IVA 02805640220</div></div>' +
+        '<p class="mu" style="margin-top:10px">Questo documento è un riepilogo, non un’offerta né un contratto: prezzi e condizioni sono quelli dell’offerta che riceverai.</p>' +
+        '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
       w.document.close();
     };
-    
+    const enc = (o) => { try { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); } catch (e) { return ''; } };
     const S = this.state, set = (o) => this.setState(o), mint = '#c4dfd8';
     const CATS = [['tutti', 'Tutti'], ['cam', 'Telecamere'], ['sens', 'Sensori e accessi'], ['rete', 'Rete e Wi-Fi'], ['router', 'Router 4G/5G'], ['iot', 'Gateway IoT'], ['out', 'Antenne e outdoor'], ['pers', 'Persone e mezzi']];
     const P = [
@@ -527,7 +543,7 @@ class Component extends DCLogic {
       empty: Object.keys(cart).length === 0,
       print: () => {
         const e = document.getElementById('f-mail');
-        printDoc('Richiesta prodotti', P.filter((x) => cart[x.id]).map((x) => [x.brand + ' ' + x.n, '× ' + cart[x.id]]), [['Email', e ? e.value.trim() : '']]);
+        printDoc('Richiesta prodotti', P.filter((x) => cart[x.id]).map((x) => [x.brand + ' ' + x.n, '× ' + cart[x.id]]), [['Email', e ? e.value.trim() : '']], location.origin + '/prodotti/#r=' + enc({ cart: cart }));
       },
       send: () => {
         const e = document.getElementById('f-mail'); const mail = e ? e.value.trim() : '';
