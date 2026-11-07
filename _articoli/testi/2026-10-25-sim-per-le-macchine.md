@@ -28,7 +28,7 @@ Scegliere prima evita di cambiare linea dopo.
 
 ## 2. Quanto traffico serve, davvero?
 
-Un sensore manda pochi MB al mese, una telecamera centinaia di GB. Con molte linee diverse conviene un **pool**: un pacchetto unico condiviso, dove chi consuma di più prende da lì. Nelle nostre offerte il pool arriva fino a 5 TB, oltre si ragiona su progetto.
+Un sensore manda pochi MB al mese, una telecamera centinaia di GB. Con molte linee diverse conviene un **pool**: un pacchetto unico condiviso, dove chi consuma di più prende da lì. Nelle nostre offerte il pool arriva fino a 1 TB, oltre si ragiona su progetto.
 
 ## 3. Cosa succede quando finisce il traffico?
 
