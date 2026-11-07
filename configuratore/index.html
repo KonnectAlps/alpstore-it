@@ -120,12 +120,6 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">SOS e uomo a terra.</div>
 </button>
 
-<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
-<div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">SOLO SIM</div>
-<div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">SIM 5G dati</div>
-<div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Hai già il tuo apparato.</div>
-</button>
-
 </div>
 
 
@@ -316,8 +310,7 @@ class Component extends DCLogic {
       { id: 'impianti', tag: 'IMPIANTI', t: 'Macchinari e impianti', d: 'Teleassistenza sicura.', q: 'Quanti impianti?', rec: ['monitor', 'vpn'], kit: 'Router industriale con VPN gestita' },
       { id: 'parcheggi', tag: 'PARCHEGGI', t: 'Parcheggi e piazzali', d: 'Targhe, sbarre e accessi.', q: 'Quanti varchi o ingressi?', rec: ['monitor', 'cam', 'accessi'], kit: 'Telecamere con lettura targhe e router 5G' },
       { id: 'rifugi', tag: 'RIFUGI', t: 'Rifugi e strutture isolate', d: 'Dove non arriva nessuno.', q: 'Quante strutture?', rec: ['monitor', 'sensori', 'cam'], kit: 'Router 5G o satellitare con sensori e telecamere' },
-      { id: 'lavoratori', tag: 'PERSONE', t: 'Chi lavora da solo', d: 'SOS e uomo a terra.', q: 'Quante persone?', rec: ['monitor', 'sos'], kit: 'Localizzatore personale con SOS e rilevamento caduta' },
-      { id: 'sim', tag: 'SOLO SIM', t: 'SIM 5G dati', d: 'Hai già il tuo apparato.', q: 'Quante SIM?', rec: [], kit: 'SIM 5G dati' }
+      { id: 'lavoratori', tag: 'PERSONE', t: 'Chi lavora da solo', d: 'SOS e uomo a terra.', q: 'Quante persone?', rec: ['monitor', 'sos'], kit: 'Localizzatore personale con SOS e rilevamento caduta' }
     ];
     const OPTS = [
       { id: 'monitor', t: 'Monitoraggio', d: 'Sempre incluso: avvisi e stato nel portale.', locked: true },
