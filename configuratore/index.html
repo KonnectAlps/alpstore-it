@@ -242,6 +242,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <label style="display: grid; gap: 6px; font-size: 14px; color: #bdbdbd;">Partita IVA<input id="f-piva" type="text" style="background: #111111; border: 1px solid #363636; border-radius: 10px; padding: 12px; color: #fff; font: inherit;"></label>
 <label style="display: grid; gap: 6px; font-size: 14px; color: #bdbdbd;">Email di lavoro<input id="f-mail" type="email" style="background: #111111; border: 1px solid #363636; border-radius: 10px; padding: 12px; color: #fff; font: inherit;"></label>
 <button type="button" onClick="{{send}}" style="background: #c4dfd8; color: #000; border: 0; border-radius: 10px; padding: 15px; font-weight: 600; box-shadow: 0 8px 24px rgb(196 223 216 / 0.18);">{{cta}}</button>
+<button type="button" onClick="{{print}}" style="background: none; color: #c4dfd8; border: 1px solid #2f3f3a; border-radius: 10px; padding: 13px; font-weight: 600;">Stampa il riepilogo</button>
 </form>
 </div>
 </sc-if>
@@ -268,6 +269,23 @@ var Component=(function(){
 class Component extends DCLogic {
   constructor(p) { super(p); this.state = { step: 1, c: 'freddo', z: 1, opts: null, tool: 'sens', pts: { 2: 'sens', 3: 'sens', 8: 'cam' } }; }
   renderVals() {
+    const printDoc = (title, rows, who) => {
+      const esc = (x) => String(x).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+      const now = new Date(); const pad = (n) => String(n).padStart(2, '0');
+      const num = 'AS-' + now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) + '-' + pad(now.getHours()) + pad(now.getMinutes());
+      const data = pad(now.getDate()) + '/' + pad(now.getMonth() + 1) + '/' + now.getFullYear();
+      const w = window.open('', '_blank'); if (!w) return;
+      w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>' + esc(title) + ' ' + num + '</title><style>body{font-family:Verdana,sans-serif;color:#111;margin:40px;max-width:760px}h1{font-size:24px;margin:0 0 4px}.m{color:#555;font-size:13px}.b{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #c4dfd8;padding-bottom:14px;margin-bottom:22px}.l{font-weight:700;font-size:22px}.l span{color:#5a8f80}table{width:100%;border-collapse:collapse;margin:8px 0 20px}td{border-bottom:1px solid #ddd;padding:9px 6px;vertical-align:top;font-size:14px}td:first-child{color:#555;width:34%}h2{font-size:15px;margin:22px 0 6px}.n{background:#f2f7f5;border-radius:8px;padding:12px 14px;font-size:13px}@media print{body{margin:18mm}}</style></head><body>' +
+        '<div class="b"><div><div class="l">AlpStore<span>.</span></div><div class="m">by KonnectAlps S.r.l. · Via Praga 5, 38121 Trento · P.IVA 02805640220</div></div><div class="m" style="text-align:right">Richiesta n. ' + num + '<br>' + data + '</div></div>' +
+        '<h1>' + esc(title) + '</h1><p class="m">Riepilogo della richiesta preparata sul sito alpstore.it</p>' +
+        '<h2>Il progetto</h2><table>' + rows.map((r) => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') + '</table>' +
+        '<h2>Richiedente</h2><table>' + who.map((r) => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1] || '—') + '</td></tr>').join('') + '</table>' +
+        '<div class="n"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro un giorno lavorativo. Tutto arriva configurato, protetto e nel monitoraggio.<br>Contatti: 0471 840048 · commerciale@konnectalps.it</div>' +
+        '<p class="m" style="margin-top:18px">Questo documento non è un’offerta né un contratto: prezzi e condizioni sono quelli dell’offerta che riceverai.</p>' +
+        '<script>window.onload=function(){window.print()}<\/script></body></html>');
+      w.document.close();
+    };
+    
     const S = this.state;
     const CASES = [
       { id: 'flotte', tag: 'FLOTTE', t: 'Mezzi e furgoni', d: 'Posizione e connessione a bordo.', q: 'Quanti mezzi?', rec: ['monitor', 'dns'], kit: 'Router da veicolo con GPS e SIM IoT' },
@@ -338,6 +356,10 @@ class Component extends DCLogic {
       }),
       cta: direct ? 'Ordina ora' : 'Invia al nostro tecnico',
       priceNote: direct ? 'Arriva pronta da usare. Consegna entro 30 giorni fino a 5 SIM.' : 'Prezzo: lo ricevi con l’offerta, entro un giorno lavorativo.',
+      print: () => {
+        const v = (id) => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
+        printDoc(direct ? 'Ordine SIM 5G dati' : 'Progetto ' + c.t, [['Caso d\u2019uso', c.t], ['Quantità', SIZES[S.z]], ['Cosa serve', this.renderVals().summary.join(' · ')]], [['Azienda o ente', v('f-az')], ['Partita IVA', v('f-piva')], ['Email', v('f-mail')]]);
+      },
       send: () => {
         const v = (id) => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
         const body = ['Richiesta dal configuratore AlpStore', '', 'Caso: ' + c.t, 'Quantità: ' + SIZES[S.z], 'Cosa serve: ' + this.renderVals().summary.join(', '), '', 'Azienda: ' + v('f-az'), 'Partita IVA: ' + v('f-piva'), 'Email: ' + v('f-mail')].join('\n');
