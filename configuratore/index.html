@@ -187,7 +187,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <button type="button" onClick="{{z.pick}}" style="background: {{z.bg}}; color: {{z.fg}}; border: 1px solid {{z.border}}; border-radius: 12px; padding: 18px 28px; font-size: 20px; font-weight: 600; min-width: 140px;">{{z.t}}</button>
 </sc-for>
 </div>
-<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Da 20 in su lavoriamo con un pool di traffico condiviso: costa meno e non si blocca nessuna SIM.</p>
+<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Da 20 in su lavoriamo con un pool di traffico condiviso fino a 1 TB: costa meno e non si blocca nessuna SIM. Oltre 1 TB, su progetto.</p>
 </sc-if>
 
 <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
@@ -371,7 +371,7 @@ class Component extends DCLogic {
           tap: () => { const p = { ...S.pts }; if (p[i] === S.tool) delete p[i]; else p[i] = S.tool; set({ pts: p }); } };
       }),
       cta: direct ? 'Ordina ora' : 'Invia al nostro tecnico',
-      priceNote: direct ? 'Arriva pronta da usare. Consegna entro 30 giorni fino a 5 SIM.' : 'Prezzo: lo ricevi con l’offerta, entro un giorno lavorativo.',
+      priceNote: direct ? 'Arriva pronta da usare. Consegna entro 30 giorni fino a 50 SIM.' : 'Prezzo: lo ricevi con l’offerta, entro un giorno lavorativo.',
       print: () => {
         const v = (id) => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
         printDoc(direct ? 'Ordine SIM 5G dati' : 'Progetto ' + c.t, [['Caso d\u2019uso', c.t], ['Quantità', SIZES[S.z]], ['Cosa serve', this.renderVals().summary.join(' · ')]], [['Azienda o ente', v('f-az')], ['Partita IVA', v('f-piva')], ['Email', v('f-mail')]], location.origin + '/configuratore/#r=' + enc({ c: S.c, z: S.z, o: on, p: S.pts }));
