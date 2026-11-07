@@ -72,6 +72,6 @@ Con AlpStore il progetto può comprendere linea e apparati configurati da Konnec
 
 ---
 
-AlpStore è il ramo di KonnectAlps dedicato alle linee IoT e alle soluzioni per collegare macchine, impianti e siti remoti. Le linee IoT sono già attivabili. Router, antenne e le altre componenti dell'ecosistema vengono valutati in base al progetto e alla disponibilità.
+AlpStore è il ramo di KonnectAlps dedicato alla Connettività IoT e alle soluzioni per collegare macchine, impianti e siti remoti. La Connettività IoT è già attivabile. Router, antenne e le altre componenti dell'ecosistema vengono valutati in base al progetto e alla disponibilità.
 
 Avete un impianto da collegare? Raccontateci **dove si trova, cosa deve comunicare e chi deve accedervi**.

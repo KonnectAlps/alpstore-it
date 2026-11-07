@@ -28,7 +28,7 @@ Scegliere prima evita di cambiare linea dopo.
 
 ## 2. Quanto traffico serve, davvero?
 
-Un sensore manda pochi MB al mese, una telecamera centinaia di GB. Con molte linea diverse conviene un **pool**: un pacchetto unico condiviso, dove chi consuma di più prende da lì. Nelle nostre offerte il pool arriva fino a 5 TB, oltre si ragiona su progetto.
+Un sensore manda pochi MB al mese, una telecamera centinaia di GB. Con molte linee diverse conviene un **pool**: un pacchetto unico condiviso, dove chi consuma di più prende da lì. Nelle nostre offerte il pool arriva fino a 5 TB, oltre si ragiona su progetto.
 
 ## 3. Cosa succede quando finisce il traffico?
 
@@ -42,10 +42,10 @@ Una linea IoT arriva già configurata nel suo apparato e si vede da un'unica das
 
 ## 5. Cosa firmo?
 
-Condizioni chiare prima di tutto: Linea solo dati, niente chiamate; nessuna durata minima; costi di attivazione, canone e disattivazione scritti nell'offerta. Le nostre condizioni sono pubbliche su [alpstore.it](https://alpstore.it/condizioni-sim/).
+Condizioni chiare prima di tutto: linea solo dati, niente chiamate; nessuna durata minima; costi di attivazione, canone e disattivazione scritti nell'offerta. Le nostre condizioni sono pubbliche su [alpstore.it](https://alpstore.it/condizioni-sim/).
 
 ---
 
-Per questo nasce **AlpStore**, lo store di KonnectAlps per le linee IoT gestite: 4G e NB-IoT, IP statico o VPN, pool condivisi, router e apparati configurati da noi.
+Per questo nasce **AlpStore**, lo store di KonnectAlps per la Connettività IoT gestita: 4G e NB-IoT, IP statico o VPN, pool condivisi, router e apparati configurati da noi.
 
 Se avete impianti da collegare e non sapete da dove partire, scriveteci: partiamo dalle domande, non dal listino.

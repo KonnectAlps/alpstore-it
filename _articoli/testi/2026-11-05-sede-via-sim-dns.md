@@ -46,7 +46,7 @@ Prima di limitare gli accessi, però, occorre conoscere le dipendenze del macchi
 
 ## 4. Chi lavora in mobilità può cambiare rete
 
-Se il tecnico rimane collegato al router aziendale con linea, può utilizzare la protezione configurata su quel collegamento.
+Se il tecnico rimane collegato al router aziendale con connettività mobile, può utilizzare la protezione configurata su quel collegamento.
 
 Se invece il portatile passa a un hotspot diverso o al Wi-Fi di un'altra struttura, la policy associata all'IP della linea non lo segue automaticamente. Per questo scenario FlashStart prevede soluzioni per dispositivi in mobilità, come ClientShield, da verificare per sistema operativo e licenza.
 
@@ -62,7 +62,7 @@ Anche quando la linea è un backup, il collaudo deve verificare cosa accade al c
 
 ---
 
-Con AlpStore by KonnectAlps possiamo progettare insieme Linee, router, indirizzamento e protezione DNS FlashStart, partendo dal lavoro che quella connessione deve sostenere.
+Con AlpStore by KonnectAlps possiamo progettare insieme connettività, router, indirizzamento e protezione DNS FlashStart, partendo dal lavoro che quella connessione deve sostenere.
 
 La tua linea collega una sede, una persona o un macchinario. **Hai definito anche le sue regole?**
 
