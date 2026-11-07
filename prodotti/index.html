@@ -167,7 +167,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 
 <article style="background: #111111; border: 1px solid #363636; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px;">
 <button type="button" aria-label="Dettagli Registratore UNVR" style="height: 150px; border: 0; border-radius: 12px; background: #f2f3f3; display: flex; align-items: center; justify-content: center; padding: 10px; cursor: pointer;">
-<img src="https://images.svc.ui.com/?u=https%3A%2F%2Fcdn.ecomm.ui.com%2Fproducts%2F8a3b51c6-d3e9-4ea7-95b3-49a1253c4542%2F5607887c-7486-4d43-881c-0545d9387de0.png&amp;q=75&amp;w=360" alt="Registratore UNVR" loading="lazy" onerror="this.style.display='none'" style="max-width: 100%; max-height: 130px; object-fit: contain; display: none;">
+<img src="https://images.svc.ui.com/?u=https%3A%2F%2Fcdn.ecomm.ui.com%2Fproducts%2F8a3b51c6-d3e9-4ea7-95b3-49a1253c4542%2F5607887c-7486-4d43-881c-0545d9387de0.png&amp;q=75&amp;w=360" alt="Registratore UNVR" loading="lazy" onerror="this.style.display='none'" style="max-width: 100%; max-height: 130px; object-fit: contain;">
 
 </button>
 <div style="display: flex; justify-content: space-between; gap: 8px; align-items: baseline;">
@@ -1049,7 +1049,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <label style="display: grid; gap: 6px; font-size: 14px; color: #bdbdbd;">Email di lavoro<input id="f-mail" type="email" style="background: #0a0a0a; border: 1px solid #363636; border-radius: 10px; padding: 12px; color: #fff; font: inherit;"></label>
 <button type="button" style="background: #c4dfd8; color: #000; border: 0; border-radius: 10px; padding: 15px; font-weight: 600; box-shadow: 0 8px 24px rgb(196 223 216 / 0.18);">Richiedi l'offerta</button>
 <button type="button" style="background: none; color: #c4dfd8; border: 1px solid #2f3f3a; border-radius: 10px; padding: 13px; font-weight: 600;">Stampa la richiesta</button>
-<p style="margin: 0; color: #8c8c8c; font-size: 13px;">Per ora si ordina sempre parlando con noi: mandi la richiesta e ricevi l'offerta entro un giorno lavorativo. Più avanti arriverà anche l'ordine online. Solo aziende con partita IVA e PA.</p>
+<p style="margin: 0; color: #8c8c8c; font-size: 13px;">Per ora si ordina sempre parlando con noi: mandi la richiesta e ricevi l'offerta entro 48 ore lavorative. Più avanti arriverà anche l'ordine online. Solo aziende con partita IVA e PA.</p>
 </aside>
 </section>
 </div>
@@ -1130,7 +1130,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <label style="display: grid; gap: 6px; font-size: 14px; color: #bdbdbd;">Email di lavoro<input id="f-mail" type="email" style="background: #0a0a0a; border: 1px solid #363636; border-radius: 10px; padding: 12px; color: #fff; font: inherit;"></label>
 <button type="button" onClick="{{send}}" style="background: #c4dfd8; color: #000; border: 0; border-radius: 10px; padding: 15px; font-weight: 600; box-shadow: 0 8px 24px rgb(196 223 216 / 0.18);">Richiedi l'offerta</button>
 <button type="button" onClick="{{print}}" style="background: none; color: #c4dfd8; border: 1px solid #2f3f3a; border-radius: 10px; padding: 13px; font-weight: 600;">Stampa la richiesta</button>
-<p style="margin: 0; color: #8c8c8c; font-size: 13px;">Per ora si ordina sempre parlando con noi: mandi la richiesta e ricevi l'offerta entro un giorno lavorativo. Più avanti arriverà anche l'ordine online. Solo aziende con partita IVA e PA.</p>
+<p style="margin: 0; color: #8c8c8c; font-size: 13px;">Per ora si ordina sempre parlando con noi: mandi la richiesta e ricevi l'offerta entro 48 ore lavorative. Più avanti arriverà anche l'ordine online. Solo aziende con partita IVA e PA.</p>
 </aside>
 </section>
 </div>
@@ -1174,7 +1174,7 @@ class Component extends DCLogic {
         '<div class="grid"><div class="main"><div class="card"><div class="ov" style="margin-bottom:6px">Il progetto</div><table>' + rows.map(tr).join('') + '</table></div>' +
         '<div class="card"><div class="ov" style="margin-bottom:6px">Richiedente</div><table>' + who.map(tr).join('') + '</table></div></div>' +
         (qr ? '<div class="qr"><div class="bx">' + qr + '</div><p>Inquadra per riaprire questa richiesta sul sito</p></div>' : '') + '</div>' +
-        '<div class="nx"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro un giorno lavorativo. Tutto arriva configurato, protetto e nel monitoraggio.</div>' +
+        '<div class="nx"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro 48 ore lavorative. Tutto arriva configurato, protetto e nel monitoraggio.</div>' +
         '<div class="ft"><div class="mu">0471 840048 · commerciale@konnectalps.it · alpstore.it</div><div class="mu">KonnectAlps S.r.l. · Via Praga 5, 38121 Trento · P.IVA 02805640220</div></div>' +
         '<p class="mu" style="margin-top:10px">Questo documento è un riepilogo, non un’offerta né un contratto: prezzi e condizioni sono quelli dell’offerta che riceverai.</p>' +
         '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');

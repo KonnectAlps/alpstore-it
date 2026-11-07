@@ -298,7 +298,7 @@ class Component extends DCLogic {
         '<div class="grid"><div class="main"><div class="card"><div class="ov" style="margin-bottom:6px">Il progetto</div><table>' + rows.map(tr).join('') + '</table></div>' +
         '<div class="card"><div class="ov" style="margin-bottom:6px">Richiedente</div><table>' + who.map(tr).join('') + '</table></div></div>' +
         (qr ? '<div class="qr"><div class="bx">' + qr + '</div><p>Inquadra per riaprire questa richiesta sul sito</p></div>' : '') + '</div>' +
-        '<div class="nx"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro un giorno lavorativo. Tutto arriva configurato, protetto e nel monitoraggio.</div>' +
+        '<div class="nx"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro 48 ore lavorative. Tutto arriva configurato, protetto e nel monitoraggio.</div>' +
         '<div class="ft"><div class="mu">0471 840048 · commerciale@konnectalps.it · alpstore.it</div><div class="mu">KonnectAlps S.r.l. · Via Praga 5, 38121 Trento · P.IVA 02805640220</div></div>' +
         '<p class="mu" style="margin-top:10px">Questo documento è un riepilogo, non un’offerta né un contratto: prezzi e condizioni sono quelli dell’offerta che riceverai.</p>' +
         '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
@@ -375,7 +375,7 @@ class Component extends DCLogic {
           tap: () => { const p = { ...S.pts }; if (p[i] === S.tool) delete p[i]; else p[i] = S.tool; set({ pts: p }); } };
       }),
       cta: direct ? 'Ordina ora' : 'Invia al nostro tecnico',
-      priceNote: direct ? 'Arriva pronta da usare. Consegna entro 30 giorni fino a 50 SIM.' : 'Prezzo: lo ricevi con l’offerta, entro un giorno lavorativo.',
+      priceNote: direct ? 'Arriva pronta da usare. Consegna entro 30 giorni fino a 50 SIM.' : 'Prezzo: lo ricevi con l’offerta, entro 48 ore lavorative.',
       print: () => {
         const v = (id) => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
         printDoc(direct ? 'Ordine SIM 5G dati' : 'Progetto ' + c.t, [['Caso d\u2019uso', c.t], ['Quantità', SIZES[S.z]], ['Cosa serve', this.renderVals().summary.join(' · ')]], [['Azienda o ente', v('f-az')], ['Partita IVA', v('f-piva')], ['Email', v('f-mail')]], location.origin + '/configuratore/#r=' + enc({ c: S.c, z: S.z, o: on, p: S.pts }));
