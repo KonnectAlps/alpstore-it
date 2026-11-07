@@ -1034,6 +1034,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <h2 style="margin: 0; font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-size: 28px;">{{dp.n}}</h2>
 <p style="margin: 0; color: #bdbdbd;">{{dp.d}} Arriva configurato, con password e aggiornamenti gestiti da noi, e nel monitoraggio.</p>
 <div style="background: #111111; border: 1px solid #363636; border-radius: 14px; padding: 14px 16px;"><div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8c8c8c;">ACQUISTO</div><div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 6px;"><span>Apparato</span><b style="font-size: 20px;">{{dp.priceLabel}}</b></div><div style="color: #8c8c8c; font-size: 12px;">{{dp.priceNote}}</div><div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 14px;"><span>Configurazione</span><span style="color: #c4dfd8;">preventivo a parte</span></div><div style="display: flex; justify-content: space-between; margin-top: 4px; font-size: 14px;"><span>Monitoraggio e assistenza</span><span style="color: #c4dfd8;">canone su richiesta</span></div></div>
+<sc-if value="{{dp.hasDocs}}" hint-placeholder-val="{{ false }}"><div style="border: 1px solid #4a4330; background: #1f1c12; border-radius: 14px; padding: 14px 16px;"><div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #e6d5a8;">PRIMA DELLA CONSEGNA</div><div style="margin-top: 6px; font-size: 14px; color: #e9e2cc;">{{dp.docs}}</div></div></sc-if>
 <div style="background: #16201d; border: 1px solid #2f3f3a; border-radius: 14px; padding: 14px 16px;"><div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #c4dfd8;">NOLEGGIO</div><div style="margin-top: 6px; font-size: 14px; color: #d8ebe5;">Apparato, configurazione e monitoraggio in un unico canone mensile: su richiesta.</div></div>
 <button type="button" onClick="{{dp.inc}}" style="background: #c4dfd8; color: #000; border: 0; border-radius: 10px; padding: 14px; font-weight: 600;">{{dp.addLabel}}</button>
 <sc-if value="{{dp.hasUrl}}" hint-placeholder-val="{{ false }}"><a href="{{dp.url}}" target="_blank" rel="noopener" style="color: #c4dfd8; font-size: 14px; font-weight: 600; text-decoration: none;">Scheda ufficiale del produttore ↗</a></sc-if>
@@ -1205,7 +1206,15 @@ class Component extends DCLogic {
     const cart = S.cart;
     const add = (id, d) => { const q = Math.max(0, (cart[id] || 0) + d); const n = { ...cart }; if (q) n[id] = q; else delete n[id]; set({ cart: n }); };
     const img = (u, w) => u.indexOf('cdn.ecomm.ui.com') > -1 ? 'https://images.svc.ui.com/?u=' + encodeURIComponent(u) + '&q=75&w=' + w : u;
-    const deco = (p) => ({ ...p, ph: label[p.c].toUpperCase(), hasImg: !!p.img, noImg: !p.img, imgBg: p.img ? '#f2f3f3' : '#1a1a1a', thumb: p.img ? img(p.img, 360) : '', big: p.img ? img(p.img, 900) : '',
+    const DOCS = {
+      cam: 'Servono cartelli e informativa privacy. Se le telecamere possono riprendere lavoratori, serve anche l\u2019accordo sindacale o l\u2019autorizzazione dell\u2019Ispettorato del lavoro. Ti diamo noi i modelli: senza documenti non consegniamo.',
+      sens: 'Per sensori ambientali basta il contratto. Per accessi, badge e videocitofoni valgono le regole privacy e lavoratori: ti diamo noi i modelli, senza documenti non consegniamo.',
+      pers: 'Servono informativa ai lavoratori e accordo sindacale o autorizzazione dell\u2019Ispettorato del lavoro, con regole chiare su orari e conservazione dei dati. Ti diamo noi i modelli: senza documenti non consegniamo.',
+      router: 'La SIM resta di KonnectAlps, concessa in uso, e funziona solo su apparati forniti o approvati da noi, anche per sicurezza.',
+      iot: 'La SIM resta di KonnectAlps, concessa in uso, e funziona solo su apparati forniti o approvati da noi, anche per sicurezza.',
+      out: 'La SIM resta di KonnectAlps, concessa in uso, e funziona solo su apparati forniti o approvati da noi, anche per sicurezza.',
+    };
+    const deco = (p) => ({ ...p, docs: DOCS[p.c] || '', hasDocs: !!DOCS[p.c], ph: label[p.c].toUpperCase(), hasImg: !!p.img, noImg: !p.img, imgBg: p.img ? '#f2f3f3' : '#1a1a1a', thumb: p.img ? img(p.img, 360) : '', big: p.img ? img(p.img, 900) : '',
       priceLabel: p.price ? (p.id === 'sens3' || p.from ? 'da ' : '') + p.price.toLocaleString('it-IT', { minimumFractionDigits: p.price % 1 ? 2 : 0 }) + ' €' : 'Su richiesta', priceNote: p.price ? 'Prezzo del listino ufficiale Ubiquiti Store Europa' : 'Prezzo con l\u2019offerta',
       hasUrl: !!p.url, open: () => set({ sel: p.id }), addLabel: cart[p.id] ? 'Aggiungi un altro (' + cart[p.id] + ' in richiesta)' : 'Aggiungi alla richiesta', inc: () => add(p.id, 1) });
     const dsel = P.find((x) => x.id === S.sel);
