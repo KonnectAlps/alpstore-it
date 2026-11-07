@@ -52,6 +52,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <div style="margin-top: auto; background: #111111; border: 1px solid #363636; border-radius: 14px; padding: 16px; font-size: 14px; color: #bdbdbd;">Sempre inclusi: configurazione, monitoraggio e accesso al portale.</div>
 </aside>
 
+<style>button.pick,button[onClick]{transition:border-color .2s cubic-bezier(.2,.6,.2,1),transform .2s cubic-bezier(.2,.6,.2,1)}button.pick:hover{border-color:#c4dfd8 !important;transform:translateY(-2px)}@media (prefers-reduced-motion:reduce){button.pick:hover{transform:none}}</style>
 <main style="flex: 1 1 520px; min-width: 0; padding: 40px 32px; display: flex; flex-direction: column;">
 
 
@@ -59,67 +60,67 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <p style="color: #a6a6a6; margin: 8px 0 28px;">Scegli il caso più vicino al tuo.</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px;">
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">FLOTTE</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Mezzi e furgoni</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Posizione e connessione a bordo.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #16201d; color: #ffffff; border: 1px solid #c4dfd8; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #16201d; color: #ffffff; border: 1px solid #c4dfd8; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">FREDDO</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Celle frigo</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Temperatura e allarmi.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">CANTIERI</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Telecamere in cantiere</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Dove non c’è una linea.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">NEGOZI</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Punti vendita</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Casse, POS e telecamere.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">ACCESSI</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Controllo accessi</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Porte e varchi.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">BACKUP</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Linea di riserva</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">La sede resta online.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">IMPIANTI</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Macchinari e impianti</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Teleassistenza sicura.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">PARCHEGGI</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Parcheggi e piazzali</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Targhe, sbarre e accessi.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">RIFUGI</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Rifugi e strutture isolate</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Dove non arriva nessuno.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">PERSONE</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">Chi lavora da solo</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">SOS e uomo a terra.</div>
 </button>
 
-<button type="button" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" style="text-align: left; background: #111111; color: #ffffff; border: 1px solid #363636; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">SOLO SIM</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">SIM 5G dati</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">Hai già il tuo apparato.</div>
@@ -163,6 +164,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <div style="margin-top: auto; background: #111111; border: 1px solid #363636; border-radius: 14px; padding: 16px; font-size: 14px; color: #bdbdbd;">Sempre inclusi: configurazione, monitoraggio e accesso al portale.</div>
 </aside>
 
+<style>button.pick,button[onClick]{transition:border-color .2s cubic-bezier(.2,.6,.2,1),transform .2s cubic-bezier(.2,.6,.2,1)}button.pick:hover{border-color:#c4dfd8 !important;transform:translateY(-2px)}@media (prefers-reduced-motion:reduce){button.pick:hover{transform:none}}</style>
 <main style="flex: 1 1 520px; min-width: 0; padding: 40px 32px; display: flex; flex-direction: column;">
 
 <sc-if value="{{s1}}" hint-placeholder-val="{{ true }}">
@@ -170,7 +172,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <p style="color: #a6a6a6; margin: 8px 0 28px;">Scegli il caso più vicino al tuo.</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px;">
 <sc-for list="{{cases}}" as="c" hint-placeholder-count="6">
-<button type="button" onClick="{{c.pick}}" style="text-align: left; background: {{c.bg}}; color: #ffffff; border: 1px solid {{c.border}}; border-radius: 16px; padding: 20px; min-height: 132px;">
+<button type="button" class="pick" onClick="{{c.pick}}" style="text-align: left; background: {{c.bg}}; color: #ffffff; border: 1px solid {{c.border}}; border-radius: 16px; padding: 20px; min-height: 132px;">
 <div style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">{{c.tag}}</div>
 <div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 20px; margin-top: 8px;">{{c.t}}</div>
 <div style="color: #a6a6a6; font-size: 14px; margin-top: 4px;">{{c.d}}</div>
@@ -182,11 +184,12 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
 <h2 style="margin: 0; font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-size: 34px;">{{sizeQ}}</h2>
 <p style="color: #a6a6a6; margin: 8px 0 28px;">Un numero indicativo basta. Lo affiniamo insieme.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 12px;">
-<sc-for list="{{sizes}}" as="z" hint-placeholder-count="4">
-<button type="button" onClick="{{z.pick}}" style="background: {{z.bg}}; color: {{z.fg}}; border: 1px solid {{z.border}}; border-radius: 12px; padding: 18px 28px; font-size: 20px; font-weight: 600; min-width: 140px;">{{z.t}}</button>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; max-width: 900px;">
+<sc-for list="{{sizes}}" as="z" hint-placeholder-count="5">
+<button type="button" class="pick" onClick="{{z.pick}}" style="text-align: left; background: {{z.bg}}; color: {{z.fg}}; border: 1px solid {{z.border}}; border-radius: 16px; padding: 18px 20px; min-height: 96px;"><span style="display: block; font-size: 24px; font-weight: 700; font-family: 'KA Sans', 'DejaVu Sans', sans-serif;">{{z.t}}</span><span style="display: block; margin-top: 6px; font-size: 13px; color: {{z.subc}};">{{z.sub}}</span></button>
 </sc-for>
 </div>
+<div style="margin-top: 28px; max-width: 900px; background: #16201d; border: 1px solid #2f3f3a; border-radius: 16px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start;"><span style="color: #c4dfd8; font-weight: 700; font-size: 20px; line-height: 1;">Λ</span><span><span style="display: block; font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">COSA PREPARIAMO</span><span style="display: block; margin-top: 4px; color: #d8ebe5;">{{kitNow}}, configurato e protetto da noi, nel tuo portale.</span></span></div>
 <p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Da 20 in su lavoriamo con un pool di traffico condiviso fino a 1 TB: costa meno e non si blocca nessuna SIM. Oltre 1 TB, su progetto.</p>
 </sc-if>
 
@@ -327,7 +330,8 @@ class Component extends DCLogic {
       { id: 'sos', t: 'Allarme uomo a terra', d: 'SOS, caduta e immobilità, con la posizione.' },
       { id: 'partner', t: 'Accesso per il mio installatore', d: 'Il tuo partner vede l’impianto nel portale.' }
     ];
-    const SIZES = ['1–5', '6–20', '21–50', 'Oltre 50'];
+    const SIZES = ['1–5', '6–20', '21–50', 'Oltre 50', 'Non so'];
+    const SIZE_SUB = ['Per iniziare', 'Più sedi o mezzi', 'Con pool di traffico', 'Su progetto', 'Ti aiutiamo a contare'];
     const c = CASES.find((x) => x.id === S.c) || CASES[0];
     const on = S.opts || Object.fromEntries(c.rec.map((r) => [r, true]));
     const set = (o) => this.setState(o);
@@ -351,8 +355,8 @@ class Component extends DCLogic {
         return { i: done ? '✓' : String(k), t, color: cur || done ? mint : '#8c8c8c', bg: done ? mint : 'transparent', fg: done ? '#000' : (cur ? mint : '#8c8c8c') };
       }),
       cases: CASES.map((x) => ({ ...x, bg: x.id === S.c ? '#16201d' : '#111111', border: x.id === S.c ? mint : '#363636', pick: () => set({ c: x.id, opts: null, step: 2 }) })),
-      sizeQ: c.q,
-      sizes: SIZES.map((t, i) => ({ t, bg: i === S.z ? mint : '#111111', fg: i === S.z ? '#000' : '#fff', border: i === S.z ? mint : '#363636', pick: () => set({ z: i, step: 3 }) })),
+      sizeQ: c.q, kitNow: c.kit,
+      sizes: SIZES.map((t, i) => ({ t, sub: SIZE_SUB[i], subc: i === S.z ? '#1d2a26' : '#8c8c8c', bg: i === S.z ? mint : '#111111', fg: i === S.z ? '#000' : '#fff', border: i === S.z ? mint : '#363636', pick: () => set({ z: i, step: 3 }) })),
       opts: OPTS.filter((o) => !isSim || o.id === 'ipstatico' || o.id === 'dns').map((o) => {
         const v = !!on[o.id] || o.locked;
         return { ...o, on: v ? 'true' : 'false', mark: v ? '✓' : '', box: v ? mint : 'transparent', bg: v ? '#16201d' : '#111111', border: v ? mint : '#363636',
