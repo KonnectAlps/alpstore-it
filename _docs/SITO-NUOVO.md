@@ -39,3 +39,8 @@ Lingue: italiano subito, tedesco in un secondo momento (stessa struttura, testi 
 ## In attesa
 - Prezzi e differenze Protezione / Protezione Plus: domande a Patrick (FlashStart), bacheca konnectalps-noc #107.
 - Strumento usato da Alessio per konnectalps.it.
+
+## Da fare sul sito definitivo (Vercel)
+
+- Documenti (privacy, condizioni generali, condizioni SIM, moduli PDF): si aprono in un pop-up dentro la pagina, leggibili senza lasciare il sito, con il pulsante per scaricarli. Decisione di Ezio, 07/11/2026.
+- Area clienti: voce "Accedi al portale" nel menu (anche nel menu a tre righe del telefono), da aggiungere quando Ezio lo decide.
