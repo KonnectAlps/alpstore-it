@@ -271,11 +271,11 @@ def index_page(arts: list[dict]) -> str:
                               "datePublished": a["data"]} for a in arts]}]
     body = f"""<div class="wrap">
 <nav class="crumb" aria-label="Percorso"><a href="/">Home</a> › Articoli</nav>
-<div class="head"><span class="over">Articoli</span><h1>Prima della SIM, le domande giuste<span style="color:var(--mint)">.</span></h1>
+<div class="head"><span class="over">Articoli</span><h1>Prima della linea, le domande giuste<span style="color:var(--mint)">.</span></h1>
 <p class="sub">Guide pratiche per collegare impianti, sensori, telecamere e sedi remote.</p></div>
 <div class="list">{cards}</div>
 </div>"""
-    desc = "Guide pratiche di AlpStore by KonnectAlps per scegliere e gestire SIM IoT: accesso remoto, traffico, sicurezza DNS, siti remoti."
+    desc = "Guide pratiche di AlpStore by KonnectAlps per scegliere e gestire Connettività IoT: accesso remoto, traffico, sicurezza DNS, siti remoti."
     return page("Articoli · AlpStore by KonnectAlps", desc, url, f"{BASE}/articoli/img/{arts[0]['copertina']}", body, ld)
 
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Progetta la tua soluzione · AlpStore</title><meta name="description" content="Scegli il caso d’uso, quanti mezzi o sedi e cosa ti serve: un tecnico KonnectAlps ti manda il progetto.">
-<link rel="canonical" href="https://alpstore.it/configuratore/"><meta property="og:type" content="website"><meta property="og:title" content="Progetta la tua soluzione · AlpStore"><meta property="og:description" content="Scegli il caso d’uso, quanti mezzi o sedi e cosa ti serve: un tecnico KonnectAlps ti manda il progetto."><meta property="og:url" content="https://alpstore.it/configuratore/"><meta property="og:image" content="https://alpstore.it/og.png?v=3"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="AlpStore by KonnectAlps: router 5G con SIM dati su un cantiere di montagna in Trentino al tramonto"><meta name="twitter:image:alt" content="AlpStore by KonnectAlps: router 5G con SIM dati su un cantiere di montagna in Trentino al tramonto"><meta name="twitter:card" content="summary_large_image"><meta property="og:locale" content="it_IT">
+<link rel="canonical" href="https://alpstore.it/configuratore/"><meta property="og:type" content="website"><meta property="og:title" content="Progetta la tua soluzione · AlpStore"><meta property="og:description" content="Scegli il caso d’uso, quanti mezzi o sedi e cosa ti serve: un tecnico KonnectAlps ti manda il progetto."><meta property="og:url" content="https://alpstore.it/configuratore/"><meta property="og:image" content="https://alpstore.it/og.png?v=3"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="AlpStore by KonnectAlps: router 5G con connessione dati su un cantiere di montagna in Trentino al tramonto"><meta name="twitter:image:alt" content="AlpStore by KonnectAlps: router 5G con connessione dati su un cantiere di montagna in Trentino al tramonto"><meta name="twitter:card" content="summary_large_image"><meta property="og:locale" content="it_IT">
 <link rel="icon" href="/icon-512.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#000000">
 <style>@font-face{font-family:"KA Sans";src:url(/fonts/ka-sans-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"KA Sans";src:url(/fonts/ka-sans-700.woff2) format("woff2");font-weight:600 700;font-display:swap}
@@ -190,7 +190,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 </sc-for>
 </div>
 <div style="margin-top: 28px; max-width: 900px; background: #16201d; border: 1px solid #2f3f3a; border-radius: 16px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start;"><span style="color: #c4dfd8; font-weight: 700; font-size: 20px; line-height: 1;">Λ</span><span><span style="display: block; font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">COSA PREPARIAMO</span><span style="display: block; margin-top: 4px; color: #d8ebe5;">{{kitNow}}, configurato e protetto da noi, nel tuo portale.</span></span></div>
-<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Da 20 in su lavoriamo con un pool di traffico condiviso fino a 1 TB: costa meno e non si blocca nessuna SIM. Oltre 1 TB, su progetto.</p>
+<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Da 20 in su lavoriamo con un pool di traffico condiviso fino a 1 TB: costa meno e non si blocca nessuna linea. Oltre 1 TB, su progetto.</p>
 </sc-if>
 
 <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
@@ -307,8 +307,8 @@ class Component extends DCLogic {
     const enc = (o) => { try { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); } catch (e) { return ''; } };
     const S = this.state;
     const CASES = [
-      { id: 'flotte', tag: 'FLOTTE', t: 'Mezzi e furgoni', d: 'Posizione e connessione a bordo.', q: 'Quanti mezzi?', rec: ['monitor', 'dns'], kit: 'Router da veicolo con GPS e SIM IoT' },
-      { id: 'freddo', tag: 'FREDDO', t: 'Celle frigo', d: 'Temperatura e allarmi.', q: 'Quante celle o frigoriferi?', rec: ['monitor', 'sensori', 'vpn'], kit: 'Sensori di temperatura e porta, gateway con SIM' },
+      { id: 'flotte', tag: 'FLOTTE', t: 'Mezzi e furgoni', d: 'Posizione e connessione a bordo.', q: 'Quanti mezzi?', rec: ['monitor', 'dns'], kit: 'Router da veicolo con GPS e Connettività IoT' },
+      { id: 'freddo', tag: 'FREDDO', t: 'Celle frigo', d: 'Temperatura e allarmi.', q: 'Quante celle o frigoriferi?', rec: ['monitor', 'sensori', 'vpn'], kit: 'Sensori di temperatura e porta, gateway con linea' },
       { id: 'cantieri', tag: 'CANTIERI', t: 'Telecamere in cantiere', d: 'Dove non c’è una linea.', q: 'Quante telecamere?', rec: ['monitor', 'cam', 'ipstatico'], kit: 'Telecamere UniFi con router 5G e connessione 5G' },
       { id: 'negozi', tag: 'NEGOZI', t: 'Punti vendita', d: 'Casse, POS e telecamere.', q: 'Quanti punti vendita?', rec: ['monitor', 'dns', 'cam'], kit: 'Router con backup 5G per ogni negozio' },
       { id: 'accessi', tag: 'ACCESSI', t: 'Controllo accessi', d: 'Porte e varchi.', q: 'Quanti varchi o porte?', rec: ['monitor', 'accessi'], kit: 'Lettori di accesso UniFi in rete privata' },
@@ -364,7 +364,7 @@ class Component extends DCLogic {
       }),
       caseTitle: c.t, sizeLabel: SIZES[S.z],
       summary: isSim
-        ? [c.kit, ...(on.ipstatico ? ['IP statico, configurato da noi sul tuo apparato'] : []), ...(on.dns ? ['DNS protetto FlashStart'] : []), 'Stato della SIM nel portale AlpStore']
+        ? [c.kit, ...(on.ipstatico ? ['IP statico, configurato da noi sul tuo apparato'] : []), ...(on.dns ? ['DNS protetto FlashStart'] : []), 'Stato della linea nel portale AlpStore']
         : [c.kit, ...OPTS.filter((o) => on[o.id] || o.locked).map((o) => o.t), ...(showPlan && nPts ? [nPts + ' punti segnati sulla pianta'] : []), 'Configurazione e spedizione pronta da accendere', 'Accesso al portale AlpStore'],
       showPlan,
       ptools: PT.map((t) => ({ ...t, bg: t.id === S.tool ? '#16201d' : '#111111', border: t.id === S.tool ? mint : '#363636', pick: () => set({ tool: t.id }) })),
@@ -375,7 +375,7 @@ class Component extends DCLogic {
           tap: () => { const p = { ...S.pts }; if (p[i] === S.tool) delete p[i]; else p[i] = S.tool; set({ pts: p }); } };
       }),
       cta: direct ? 'Ordina ora' : 'Invia al nostro tecnico',
-      priceNote: direct ? 'Arriva pronta da usare. Consegna entro 30 giorni fino a 50 SIM.' : 'Prezzo: lo ricevi con l’offerta, entro 48 ore lavorative.',
+      priceNote: direct ? 'Arriva pronta da usare. Consegna entro 30 giorni fino a 50 linee.' : 'Prezzo: lo ricevi con l’offerta, entro 48 ore lavorative.',
       print: () => {
         const v = (id) => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
         printDoc(direct ? 'Ordine Connessione 5G' : 'Progetto ' + c.t, [['Caso d\u2019uso', c.t], ['Quantità', SIZES[S.z]], ['Cosa serve', this.renderVals().summary.join(' · ')]], [['Azienda o ente', v('f-az')], ['Partita IVA', v('f-piva')], ['Email', v('f-mail')]], location.origin + '/configuratore/#r=' + enc({ c: S.c, z: S.z, o: on, p: S.pts }));
@@ -399,9 +399,9 @@ return Component})();mount(Component,"app","tp");</script><footer style="border-
 <p style="margin: 16px 0 0; font-size: 14px; display: grid; gap: 4px;"><a href="tel:+390471840048" style="color: #fff; text-decoration: none;">0471 840048</a><a href="mailto:commerciale@konnectalps.it" style="color: #fff; text-decoration: none;">commerciale@konnectalps.it</a></p>
 </div>
 <nav aria-label="Soluzioni" style="display: grid; gap: 8px; align-content: start; font-size: 14px;"><div style="font-family: 'KA Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8c8c8c; margin-bottom: 4px;">SOLUZIONI</div>
-<a href="/configuratore/" style="color: #bdbdbd; text-decoration: none;">Progetta la tua soluzione</a><a href="/iot/" style="color: #bdbdbd; text-decoration: none;">IoT e SIM gestite</a><a href="/ip-statico/" style="color: #bdbdbd; text-decoration: none;">IP statico: guida</a><a href="/#soluzioni" style="color: #bdbdbd; text-decoration: none;">Connessione 5G</a><a href="/videosorveglianza/" style="color: #bdbdbd; text-decoration: none;">Videosorveglianza e sensori</a><a href="/sicurezza/" style="color: #bdbdbd; text-decoration: none;">Sicurezza IoT e sul lavoro</a><a href="/prodotti/" style="color: #bdbdbd; text-decoration: none;">Prodotti</a><a href="/#partner" style="color: #bdbdbd; text-decoration: none;">Per integratori e partner</a></nav>
+<a href="/configuratore/" style="color: #bdbdbd; text-decoration: none;">Progetta la tua soluzione</a><a href="/iot/" style="color: #bdbdbd; text-decoration: none;">IoT e connettività gestita</a><a href="/ip-statico/" style="color: #bdbdbd; text-decoration: none;">IP statico: guida</a><a href="/#soluzioni" style="color: #bdbdbd; text-decoration: none;">Connessione 5G</a><a href="/videosorveglianza/" style="color: #bdbdbd; text-decoration: none;">Videosorveglianza e sensori</a><a href="/sicurezza/" style="color: #bdbdbd; text-decoration: none;">Sicurezza IoT e sul lavoro</a><a href="/prodotti/" style="color: #bdbdbd; text-decoration: none;">Prodotti</a><a href="/#partner" style="color: #bdbdbd; text-decoration: none;">Per integratori e partner</a></nav>
 <nav aria-label="Condizioni e privacy" style="display: grid; gap: 8px; align-content: start; font-size: 14px;"><div style="font-family: 'KA Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8c8c8c; margin-bottom: 4px;">CONDIZIONI E PRIVACY</div>
-<a href="/condizioni-generali/" style="color: #bdbdbd; text-decoration: none;">Condizioni generali di contratto</a><a href="/condizioni-sim/" style="color: #bdbdbd; text-decoration: none;">Condizioni delle SIM</a><a href="/condizioni-sim/AS-01-condizioni-sim-iot.pdf" style="color: #bdbdbd; text-decoration: none;">Condizioni SIM IoT (AS-01, PDF)</a><a href="/condizioni-sim/AS-02-modulo-ordine-sim.pdf" style="color: #bdbdbd; text-decoration: none;">Modulo d'ordine SIM (AS-02, PDF)</a><a href="/privacy/" style="color: #bdbdbd; text-decoration: none;">Privacy e cookie</a></nav>
+<a href="/condizioni-generali/" style="color: #bdbdbd; text-decoration: none;">Condizioni generali di contratto</a><a href="/condizioni-sim/" style="color: #bdbdbd; text-decoration: none;">Condizioni d'uso della connettività</a><a href="/condizioni-sim/AS-01-condizioni-sim-iot.pdf" style="color: #bdbdbd; text-decoration: none;">Condizioni d'uso della connettività (AS-01, PDF)</a><a href="/condizioni-sim/AS-02-modulo-ordine-sim.pdf" style="color: #bdbdbd; text-decoration: none;">Modulo d'ordine connettività (AS-02, PDF)</a><a href="/privacy/" style="color: #bdbdbd; text-decoration: none;">Privacy e cookie</a></nav>
 <nav aria-label="Risorse" style="display: grid; gap: 8px; align-content: start; font-size: 14px;"><div style="font-family: 'KA Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8c8c8c; margin-bottom: 4px;">RISORSE</div>
 <a href="/articoli/" style="color: #bdbdbd; text-decoration: none;">Articoli</a><a href="https://console.alpstore.it" style="color: #bdbdbd; text-decoration: none;">Accedi al portale</a><a href="https://konnectalps.it/supporto" style="color: #bdbdbd; text-decoration: none;">Supporto clienti KonnectAlps</a></nav>
 </div>
