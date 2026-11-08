@@ -276,7 +276,7 @@ def index_page(arts: list[dict]) -> str:
 <div class="list">{cards}</div>
 </div>"""
     desc = "Guide pratiche di AlpStore by KonnectAlps per scegliere e gestire Connettività IoT: accesso remoto, traffico, sicurezza DNS, siti remoti."
-    return page("Articoli · AlpStore by KonnectAlps", desc, url, f"{BASE}/articoli/img/{arts[0]['copertina']}", body, ld)
+    return page("Articoli su Connettività IoT, 5G e sicurezza · AlpStore", desc, url, f"{BASE}/articoli/img/{arts[0]['copertina']}", body, ld)
 
 
 def sitemap(arts: list[dict]) -> str:
