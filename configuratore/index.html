@@ -321,7 +321,7 @@ class Component extends DCLogic {
     ];
     const OPTS = [
       { id: 'monitor', t: 'Monitoraggio', d: 'Sempre incluso: avvisi e stato nel portale.', locked: true },
-      { id: 'dns', t: 'DNS protetto FlashStart', d: 'Blocca malware e phishing.' },
+      { id: 'dns', t: 'DNS protetto', d: 'Blocca malware e phishing. Da 2 € al mese, prova gratis 15 giorni.' },
       { id: 'ipstatico', t: 'IP statico pubblico', d: 'Per raggiungere l’apparato da fuori. Lo configuriamo noi.' },
       { id: 'vpn', t: 'Rete privata con VPN gestita', d: 'Nessun apparato esposto su internet.' },
       { id: 'cam', t: 'Telecamere', d: 'Interne, esterne o da cantiere.' },
@@ -364,7 +364,7 @@ class Component extends DCLogic {
       }),
       caseTitle: c.t, sizeLabel: SIZES[S.z],
       summary: isSim
-        ? [c.kit, ...(on.ipstatico ? ['IP statico, configurato da noi sul tuo apparato'] : []), ...(on.dns ? ['DNS protetto FlashStart'] : []), 'Stato della linea nel portale AlpStore']
+        ? [c.kit, ...(on.ipstatico ? ['IP statico, configurato da noi sul tuo apparato'] : []), ...(on.dns ? ['DNS protetto'] : []), 'Stato della linea nel portale AlpStore']
         : [c.kit, ...OPTS.filter((o) => on[o.id] || o.locked).map((o) => o.t), ...(showPlan && nPts ? [nPts + ' punti segnati sulla pianta'] : []), 'Configurazione e spedizione pronta da accendere', 'Accesso al portale AlpStore'],
       showPlan,
       ptools: PT.map((t) => ({ ...t, bg: t.id === S.tool ? '#16201d' : '#111111', border: t.id === S.tool ? mint : '#363636', pick: () => set({ tool: t.id }) })),
