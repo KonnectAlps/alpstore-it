@@ -29,14 +29,14 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <p id="lin" style="margin:6px 0 0;color:#bdbdbd;">0 apparati</p>
 <p id="sug" style="margin:18px 0 0;font-size:17px;">Inserisci i tuoi apparati per vedere la soluzione consigliata.</p>
 <div style="margin-top:24px;"><a href="/configuratore/" style="background: #c4dfd8; color: #000; text-decoration: none; font-weight: 600; padding: 15px 22px; border-radius: 10px; box-shadow: 0 8px 24px rgb(196 223 216 / 0.18);">Progetta la tua soluzione &gt;</a></div>
-<p style="margin:16px 0 0;color:#8c8c8c;font-size:13px;">Prezzi di partenza: Connettività IoT da 5 € al mese per linea, Connessione 5G di backup da 26,90 € al mese, IVA esclusa. Traffico oltre il volume: 3 € per GB, mai bloccato.</p>
+<p style="margin:16px 0 0;color:#8c8c8c;font-size:13px;">Prezzi di partenza, IVA esclusa: Alps IoT da 5 € al mese per linea; linee 5G 150 GB 19,90 €, 300 GB 22,90 €, 500 GB 26,90 € al mese. Traffico oltre il volume: 3 € per GB, mai bloccato.</p>
 </aside>
 </section>
 <script>(function(){var ins=document.querySelectorAll('#calc input');function fmt(n){return n<10?n.toFixed(1).replace('.',','):Math.round(n).toLocaleString('it-IT')}
 function up(){var gb=0,n=0,big=0;ins.forEach(function(i){var q=Math.max(0,Math.min(999,parseInt(i.value)||0));var g=parseFloat(i.dataset.gb);gb+=q*g;n+=q;if(g>=5)big+=q});
 document.getElementById('tot').textContent=fmt(gb);document.getElementById('lin').textContent=n+(n==1?' apparato':' apparati');
 var s='Inserisci i tuoi apparati per vedere la soluzione consigliata.';
-if(n>0){if(big==0)s='Ti basta la <b>Connettività IoT</b>: pochi dati, linee economiche, tutto in rete privata.';else if(gb>1000)s='Oltre 1 TB al mese: serve un <b>progetto dedicato</b>, ti chiamiamo noi.';else if(n>1)s='Conviene un <b>pool condiviso</b>: le linee pescano da un unico volume, fino a 1 TB al mese.';else s='Per questo traffico serve la <b>Connessione 5G</b>, come linea principale o di backup.'}
+if(n>0){if(big==0)s='Ti basta <b>Alps IoT</b>: pochi dati, linee economiche, tutto in rete privata.';else if(gb>500)s='Oltre 500 GB al mese: servono più linee 5G o un <b>progetto dedicato</b>, ti chiamiamo noi.';else{var t=gb<=150?150:gb<=300?300:500;s='Per questo traffico basta una linea <b>5G '+t+' GB</b>, come linea principale o di backup'+(n>big?', e i sensori su <b>Alps IoT</b>.':'.')}}
 document.getElementById('sug').innerHTML=s}ins.forEach(function(i){i.addEventListener('input',up)});up()})();</script></main>
 <footer style="border-top: 1px solid #262626; background: #0a0a0a; font-family: 'KA Sans', 'DejaVu Sans', Verdana, sans-serif; color: #fff;">
 <div style="max-width: 1200px; margin: 0 auto; padding: 56px 24px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px;">

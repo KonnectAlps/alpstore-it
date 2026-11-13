@@ -190,7 +190,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 </sc-for>
 </div>
 <div style="margin-top: 28px; max-width: 900px; background: #16201d; border: 1px solid #2f3f3a; border-radius: 16px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start;"><span style="color: #c4dfd8; font-weight: 700; font-size: 20px; line-height: 1;">Λ</span><span><span style="display: block; font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">COSA PREPARIAMO</span><span style="display: block; margin-top: 4px; color: #d8ebe5;">{{kitNow}}, configurato e protetto da noi, nel tuo portale.</span></span></div>
-<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Da 20 in su lavoriamo con un pool di traffico condiviso fino a 1 TB: costa meno e non si blocca nessuna linea. Oltre 1 TB, su progetto.</p>
+<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Linee 5G da 150, 300 o 500 GB, Alps IoT da 5 € per linea. Da 20 linee in su l'offerta è su progetto. Nessuna linea si blocca.</p>
 </sc-if>
 
 <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
@@ -307,7 +307,7 @@ class Component extends DCLogic {
     const enc = (o) => { try { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); } catch (e) { return ''; } };
     const S = this.state;
     const CASES = [
-      { id: 'flotte', tag: 'FLOTTE', t: 'Mezzi e furgoni', d: 'Posizione e connessione a bordo.', q: 'Quanti mezzi?', rec: ['monitor', 'dns'], kit: 'Router da veicolo con GPS e Connettività IoT' },
+      { id: 'flotte', tag: 'FLOTTE', t: 'Mezzi e furgoni', d: 'Posizione e connessione a bordo.', q: 'Quanti mezzi?', rec: ['monitor', 'dns'], kit: 'Router da veicolo con GPS e Alps IoT' },
       { id: 'freddo', tag: 'FREDDO', t: 'Celle frigo', d: 'Temperatura e allarmi.', q: 'Quante celle o frigoriferi?', rec: ['monitor', 'sensori', 'vpn'], kit: 'Sensori di temperatura e porta, gateway con linea' },
       { id: 'cantieri', tag: 'CANTIERI', t: 'Telecamere in cantiere', d: 'Dove non c’è una linea.', q: 'Quante telecamere?', rec: ['monitor', 'cam', 'ipstatico'], kit: 'Telecamere UniFi con router 5G e connessione 5G' },
       { id: 'negozi', tag: 'NEGOZI', t: 'Punti vendita', d: 'Casse, POS e telecamere.', q: 'Quanti punti vendita?', rec: ['monitor', 'dns', 'cam'], kit: 'Router con backup 5G per ogni negozio' },
@@ -316,14 +316,14 @@ class Component extends DCLogic {
       { id: 'impianti', tag: 'IMPIANTI', t: 'Macchinari e impianti', d: 'Teleassistenza sicura.', q: 'Quanti impianti?', rec: ['monitor', 'vpn'], kit: 'Router industriale con VPN gestita' },
       { id: 'parcheggi', tag: 'PARCHEGGI', t: 'Parcheggi e piazzali', d: 'Targhe, sbarre e accessi.', q: 'Quanti varchi o ingressi?', rec: ['monitor', 'cam', 'accessi'], kit: 'Telecamere con lettura targhe e router 5G' },
       { id: 'rifugi', tag: 'RIFUGI', t: 'Rifugi e strutture isolate', d: 'Dove non arriva nessuno.', q: 'Quante strutture?', rec: ['monitor', 'sensori', 'cam'], kit: 'Router 5G o satellitare con sensori e telecamere' },
-      { id: 'conn5g', tag: '5G', t: 'Connessione 5G', d: 'Linea principale o di backup.', q: 'Quante sedi?', rec: ['monitor', 'dns', 'ipstatico'], kit: 'Router 5G con connessione 5G, con o senza IP pubblico' },
+      { id: 'conn5g', tag: '5G', t: 'Connessione 5G', d: 'Tagli da 150, 300 o 500 GB.', q: 'Quante sedi?', rec: ['monitor', 'dns', 'ipstatico'], kit: 'Router 5G gestito con linea 5G da 150, 300 o 500 GB, con o senza IP pubblico' },
       { id: 'lavoratori', tag: 'PERSONE', t: 'Chi lavora da solo', d: 'SOS e uomo a terra.', q: 'Quante persone?', rec: ['monitor', 'sos'], kit: 'Localizzatore personale con SOS e rilevamento caduta' }
     ];
     const OPTS = [
       { id: 'monitor', t: 'Monitoraggio', d: 'Sempre incluso: avvisi e stato nel portale.', locked: true },
       { id: 'dns', t: 'DNS protetto', d: 'Blocca malware e phishing. Da 2 € al mese, prova gratis 15 giorni.' },
-      { id: 'ipstatico', t: 'IP statico pubblico', d: 'Per raggiungere l’apparato da fuori. Lo configuriamo noi.' },
-      { id: 'vpn', t: 'Rete privata con VPN gestita', d: 'Nessun apparato esposto su internet.' },
+      { id: 'ipstatico', t: 'IP statico pubblico', d: 'Per raggiungere l’apparato da fuori. 3 € al mese, configurazione 25 €.' },
+      { id: 'vpn', t: 'IP privato statico con VPN gestita', d: 'APN dedicato, nessun apparato esposto su internet. 2 € al mese, configurazione 25 €.' },
       { id: 'cam', t: 'Telecamere', d: 'Interne, esterne o da cantiere.' },
       { id: 'sensori', t: 'Sensori', d: 'Temperatura, umidità, allagamento, porte.' },
       { id: 'accessi', t: 'Controllo accessi', d: 'Badge, telefono o codice.' },
@@ -331,7 +331,7 @@ class Component extends DCLogic {
       { id: 'partner', t: 'Accesso per il mio installatore', d: 'Il tuo partner vede l’impianto nel portale.' }
     ];
     const SIZES = ['1–5', '6–20', '21–50', 'Oltre 50', 'Non so'];
-    const SIZE_SUB = ['Per iniziare', 'Più sedi o mezzi', 'Con pool di traffico', 'Su progetto', 'Ti aiutiamo a contare'];
+    const SIZE_SUB = ['Per iniziare', 'Più sedi o mezzi', 'Offerta su progetto', 'Su progetto', 'Ti aiutiamo a contare'];
     const c = CASES.find((x) => x.id === S.c) || CASES[0];
     const on = S.opts || Object.fromEntries(c.rec.map((r) => [r, true]));
     const set = (o) => this.setState(o);
