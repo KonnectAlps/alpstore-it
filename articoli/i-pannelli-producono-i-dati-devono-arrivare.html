@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I pannelli producono. I dati devono arrivare. · AlpStore</title>
+<meta name="description" content="Inverter, contatori e sistemi di raccolta dati comunicano in modi diversi. Come progettare il percorso del dato con Alps IoT, IP statico solo quando serve e DNS sui resolver usati.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://alpstore.it/articoli/i-pannelli-producono-i-dati-devono-arrivare">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AlpStore by KonnectAlps">
+<meta property="og:title" content="I pannelli producono. I dati devono arrivare. · AlpStore">
+<meta property="og:description" content="Inverter, contatori e sistemi di raccolta dati comunicano in modi diversi. Come progettare il percorso del dato con Alps IoT, IP statico solo quando serve e DNS sui resolver usati.">
+<meta property="og:url" content="https://alpstore.it/articoli/i-pannelli-producono-i-dati-devono-arrivare">
+<meta property="og:locale" content="it_IT">
+<meta property="og:image" content="https://alpstore.it/articoli/img/fotovoltaico-dati-copertina.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='' viewBox='0 0 64 64' role='img' aria-label='AlpStore'%3E%3Ctitle%3EAlpStore%3C/title%3E%3Ccircle cx='32' cy='32' r='31' fill='%230A0A0A' stroke='%23AEE7D6' stroke-width='1.6'/%3E%3Cpath transform='translate%2832 33.2%29 scale%283.1%29 translate%28-22.46 -34.73%29' fill='%23B8DFD7' d='M25.9319 37.809L23.1966 31.1687C23.0755 30.8979 22.773 30.7246 22.4583 30.7246C22.1315 30.7246 21.8289 30.8979 21.72 31.1687L18.9846 37.809C18.8273 38.1773 19.0331 38.5564 19.4325 38.6864C19.8319 38.8272 20.2676 38.6431 20.4007 38.2856L22.4582 33.3352L24.5037 38.2856C24.661 38.6431 25.0846 38.8272 25.484 38.6864C25.8955 38.5564 26.0771 38.1773 25.9318 37.809H25.9319Z'/%3E%3C/svg%3E">
+<link rel="preload" href="/fonts/ka-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://konnectalps.it/#org", "name": "KonnectAlps S.r.l.", "url": "https://konnectalps.it/", "logo": "https://alpstore.it/icon-512.png"}, {"@type": "BlogPosting", "headline": "I pannelli producono. I dati devono arrivare.", "description": "Inverter, contatori e sistemi di raccolta dati comunicano in modi diversi. Come progettare il percorso del dato con Alps IoT, IP statico solo quando serve e DNS sui resolver usati.", "image": "https://alpstore.it/articoli/img/fotovoltaico-dati-copertina.jpg", "datePublished": "2026-11-13", "dateModified": "2026-11-13", "inLanguage": "it-IT", "mainEntityOfPage": "https://alpstore.it/articoli/i-pannelli-producono-i-dati-devono-arrivare", "author": {"@id": "https://konnectalps.it/#org"}, "publisher": {"@id": "https://konnectalps.it/#org"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "AlpStore", "item": "https://alpstore.it/"}, {"@type": "ListItem", "position": 2, "name": "Articoli", "item": "https://alpstore.it/articoli/"}, {"@type": "ListItem", "position": 3, "name": "I pannelli producono. I dati devono arrivare.", "item": "https://alpstore.it/articoli/i-pannelli-producono-i-dati-devono-arrivare"}]}]}</script>
+<style>
+@font-face{font-family:"KA Sans";src:url(/fonts/ka-sans-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"KA Sans";src:url(/fonts/ka-sans-700.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"KA Mono";src:url(/fonts/ka-mono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"KA Mono";src:url(/fonts/ka-mono-700.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{color-scheme:dark;--bg:#000;--panel:#0A0A0A;--line:#1A1A1A;--line2:#2A2A2A;--ink:#fff;--muted:#A7B1AD;--dim:#8F9A96;--mint:#C4DFD8;--live:#90FD94;
+--sans:"KA Sans","DejaVu Sans",Verdana,sans-serif;--mono:"KA Mono","DejaVu Sans Mono",Consolas,monospace}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:var(--sans);font-size:17px;line-height:1.65;min-height:100vh;display:flex;flex-direction:column;
+background-image:linear-gradient(rgba(196,223,216,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(196,223,216,.045) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--mint)}a:hover{color:#fff}:focus-visible{outline:2px solid var(--live);outline-offset:3px}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+header{border-bottom:1px solid var(--line);background:rgba(0,0,0,.85)}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:18px;padding-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}.mk{width:46px;height:46px;flex:none}
+.bt{display:flex;flex-direction:column;line-height:1.1}.bt b{font-size:22px}.bt b i{font-style:normal;color:var(--mint)}
+.bt small{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:3px}
+nav.top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+nav.top a{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:10px 12px}
+nav.top a:hover,nav.top a[aria-current]{color:#fff}nav.top a[aria-current]{box-shadow:inset 0 -2px var(--mint)}
+.crumb{font-family:var(--mono);font-size:12px;color:var(--dim);padding-top:22px}.crumb a{color:var(--dim);text-decoration:none}.crumb a:hover{color:#fff}
+.over{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);display:flex;align-items:center;gap:10px}
+.over::before{content:"";width:4px;height:16px;background:var(--mint)}
+main{flex:1}
+.head{padding-top:26px;padding-bottom:10px;display:flex;flex-direction:column;gap:16px;max-width:900px}
+h1{margin:0;font-size:clamp(34px,5.2vw,58px);line-height:1.06;letter-spacing:-.025em;text-wrap:balance}
+.sub{margin:0;color:var(--mint);font-size:20px;max-width:60ch}
+.meta{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--dim)}
+.cover{margin:26px 0 0;border:1px solid var(--line2);border-radius:20px;overflow:hidden;background:var(--panel)}
+.cover img,figure img{display:block;width:100%;height:auto}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:56px;padding-top:40px;padding-bottom:64px;align-items:start}
+.body{max-width:72ch}.body p,.body li{color:#DCE3E0}.body h2{font-size:clamp(22px,2.6vw,28px);line-height:1.2;margin:40px 0 10px;letter-spacing:-.01em;scroll-margin-top:20px}
+.body strong{color:#fff}.body ul{padding-left:22px}.body li{margin:6px 0}.body li::marker{color:var(--mint)}
+.body hr{border:0;border-top:1px solid var(--line2);margin:40px 0}
+figure{margin:28px 0;border:1px solid var(--line2);border-radius:16px;overflow:hidden;background:var(--panel)}
+figcaption{font-size:13px;color:var(--dim);padding:10px 14px;border-top:1px solid var(--line)}
+.pay{font-size:22px;font-weight:700;margin:28px 0 6px}.pay i{font-style:normal;color:var(--mint)}
+aside{position:sticky;top:20px;display:flex;flex-direction:column;gap:14px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.box h3{margin:8px 0 8px;font-size:17px;line-height:1.3}.box p{margin:0;color:var(--muted);font-size:14px}
+.box ol{margin:10px 0 0;padding:0;list-style:none;counter-reset:d}
+.box ol li{counter-increment:d;border-top:1px solid var(--line);padding:8px 0;font-size:14px}
+.box ol li a{color:#DCE3E0;text-decoration:none}.box ol li a:hover{color:#fff}
+.box ol li::before{content:counter(d) " · ";font-family:var(--mono);color:var(--mint)}
+.btn{display:flex;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:14px 18px;border-radius:10px;background:var(--mint);color:#000;margin-top:14px;box-shadow:0 8px 24px rgb(196 223 216/.18)}
+.btn:hover{background:#fff;color:#000}.tel{display:block;font-family:var(--mono);font-size:14px;margin-top:10px;color:var(--muted);text-decoration:none}
+.more a{display:block;border-top:1px solid var(--line);padding:9px 0;font-size:14px;color:#DCE3E0;text-decoration:none}.more a:hover{color:#fff}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line2);border-radius:999px;padding:5px 10px;color:var(--dim)}
+.li{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.list{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;padding-top:30px;padding-bottom:64px}
+.card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:#fff;transition:border-color .2s cubic-bezier(.2,.6,.2,1)}
+.card:hover{border-color:var(--mint)}.card img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-bottom:1px solid var(--line)}
+.card div{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px}.card b{font-size:20px;line-height:1.25}.card span{color:var(--muted);font-size:15px}
+footer{border-top:1px solid var(--line);padding-top:22px;padding-bottom:max(26px,env(safe-area-inset-bottom));font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7A8581}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}footer a{color:#7A8581}
+@media (max-width:900px){.layout{grid-template-columns:1fr;gap:28px}aside{position:static}}
+@media (max-width:640px){nav.top a{padding:8px 8px 8px 0}.bt small{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header style="position: relative; border-bottom: 1px solid #262626; background: #000; font-family: 'KA Sans', 'DejaVu Sans', Verdana, sans-serif;">
+<style>.mnav{display:none;margin-left:auto}.mnav summary{list-style:none;cursor:pointer;width:44px;height:44px;border:1px solid #363636;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff}.mnav summary::-webkit-details-marker{display:none}.mnav nav{position:absolute;left:0;right:0;top:100%;background:#000;border-bottom:1px solid #262626;padding:4px 24px 24px;display:grid;z-index:50}.mnav nav a{padding:15px 0;border-bottom:1px solid #1a1a1a;color:#fff;text-decoration:none;font-size:18px}.mnav nav a.cta{margin-top:18px;border:0;border-radius:10px;background:#c4dfd8;color:#000;text-align:center;font-weight:600;font-size:16px}@media (max-width:760px){.dnav,.dcta{display:none!important}.mnav{display:block}}</style>
+<div style="max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; gap: 20px;">
+<a href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff;"><span style="width: 34px; height: 34px; border-radius: 50%; background: #c4dfd8; color: #000; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px;">Λ</span><span style="font-weight: 700; font-size: 22px;">AlpStore<span style="color: #c4dfd8;">.</span></span></a>
+<nav class="dnav" aria-label="Principale" style="display: flex; flex-wrap: wrap; gap: 22px; flex: 1 1 360px; justify-content: center; font-size: 15px;"><a href="/iot/" style="color: #d0d0d0; text-decoration: none;">IoT</a><a href="/videosorveglianza/" style="color: #d0d0d0; text-decoration: none;">Videosorveglianza</a><a href="/sicurezza/" style="color: #d0d0d0; text-decoration: none;">Sicurezza</a><a href="/prodotti/" style="color: #d0d0d0; text-decoration: none;">Prodotti</a><a href="/settori/" style="color: #d0d0d0; text-decoration: none;">Settori</a><a href="/casi-studio/" style="color: #d0d0d0; text-decoration: none;">Casi studio</a><a href="/articoli/" style="color: #d0d0d0; text-decoration: none;">Articoli</a><a href="/#partner" style="color: #d0d0d0; text-decoration: none;">Partner</a></nav>
+<a class="dcta" href="/configuratore/" style="background: #c4dfd8; color: #000; text-decoration: none; font-weight: 600; padding: 11px 18px; border-radius: 10px; font-size: 15px;">Progetta la tua soluzione</a>
+<details class="mnav"><summary aria-label="Apri il menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav aria-label="Menu"><a href="/iot/">IoT</a><a href="/videosorveglianza/">Videosorveglianza</a><a href="/sicurezza/">Sicurezza</a><a href="/prodotti/">Prodotti</a><a href="/settori/">Settori</a><a href="/casi-studio/">Casi studio</a><a href="/articoli/">Articoli</a><a href="/#partner">Partner</a><a class="cta" href="/configuratore/">Progetta la tua soluzione</a></nav></details>
+</div></header>
+<main>
+<div class="wrap">
+<nav class="crumb" aria-label="Percorso"><a href="/">Home</a> › <a href="/articoli/">Articoli</a> › Alps IoT</nav>
+<div class="head">
+<span class="over">Alps IoT · Energia</span>
+<h1>I pannelli producono. I dati devono arrivare.</h1>
+<p class="sub">Impianti fotovoltaici lontani o distribuiti: come portare i dati alla supervisione con una linea IoT.</p>
+<span class="meta"><time datetime="2026-11-13">13 novembre 2026</time> · 2 min di lettura · AlpStore by KonnectAlps</span>
+</div>
+<figure class="cover"><img src="/articoli/img/fotovoltaico-dati-copertina.jpg" alt="Impianto fotovoltaico tra le Alpi al tramonto." width="1600" height="900"></figure>
+<div class="layout">
+<article class="body">
+<p>Un impianto fotovoltaico può essere lontano dagli uffici, distribuito su più siti o installato dove una connessione fissa non è disponibile.</p>
+<p>Per chi lo segue, poter consultare i dati senza raggiungerlo ogni volta è un'esigenza concreta. Produzione, stato degli apparati e informazioni diagnostiche possono essere messi a disposizione dai sistemi dell'impianto. Per arrivare alla piattaforma di supervisione, però, hanno bisogno anche di un collegamento.</p>
+<p>Qui entra in gioco una linea Alps IoT, insieme al gateway adatto.</p>
+<h2 id="d1">Dal dato dell'impianto alla piattaforma</h2>
+<p>Inverter, contatori e sistemi di raccolta dati non comunicano tutti nello stesso modo. Prima di scegliere il collegamento occorre verificare le interfacce disponibili, la compatibilità con il gateway e la piattaforma che riceverà le informazioni.</p>
+<p>Il dispositivo cellulare può trasportare questi dati attraverso la rete mobile. Le misure e gli eventuali avvisi sul funzionamento dell'impianto dipendono dagli apparati e dai servizi di supervisione previsti.</p>
+<p>Per questo il progetto parte dal percorso completo del dato, fino a chi dovrà leggerlo e utilizzarlo.</p>
+<h2 id="d2">Linee monitorate, dimensionate sull'utilizzo</h2>
+<p>Le nostre linee sono monitorate. Il collegamento mobile entra in una soluzione da costruire sulla copertura disponibile e sulle esigenze del sito.</p>
+<p>Un invio periodico di valori, un aggiornamento software e una sessione di assistenza remota possono richiedere quantità di traffico diverse. Capirlo prima aiuta a scegliere il profilo adatto e a evitare dimensionamenti basati soltanto sul prezzo della linea.</p>
+<p>Il monitoraggio della linea riguarda il collegamento gestito; la supervisione della produzione richiede i sistemi dell'impianto. Tenerli distinti aiuta a capire dove intervenire quando un dato smette di arrivare.</p>
+<h2 id="d3">Accesso remoto e IP statico: una scelta da motivare</h2>
+<p>Alcuni sistemi inviano i dati a una piattaforma cloud; altri richiedono accessi tecnici specifici. Un IP pubblico statico può essere valutato quando l'architettura lo richiede, insieme alle protezioni degli accessi.</p>
+<p>VPN, firewall e autorizzazioni devono essere coerenti con gli apparati e con chi li gestisce. La scelta dipende dal lavoro che il collegamento dovrà svolgere.</p>
+<h2 id="d4">Anche i DNS seguono il progetto</h2>
+<p>Quando gateway e apparati usano nomi di dominio per raggiungere servizi cloud o aggiornamenti, possiamo valutare policy DNS FlashStart sui resolver effettivamente utilizzati.</p>
+<p>Le destinazioni necessarie vanno prima identificate e collaudate. Il filtro DNS aggiunge controlli sui domini richiesti: la protezione degli accessi e la gestione dell'impianto richiedono le proprie configurazioni.</p>
+<p>Con AlpStore by KonnectAlps mettiamo insieme linee monitorate e collegamento IoT, partendo dagli apparati e dalle informazioni che devono arrivare alla supervisione.</p>
+<p><strong>Hai più impianti da seguire? Partiamo da come comunicano e da quali dati ti servono.</strong></p>
+<p class="pay">Configurato da noi<i>.</i> Controllato da te<i>.</i></p>
+<p class="li">Pubblicato anche su <a href="https://www.linkedin.com/pulse/i-pannelli-producono-dati-devono-arrivare-alpstore-um5ff/">LinkedIn</a></p>
+</article>
+<aside>
+<div class="box"><span class="over">In breve</span><h3>Le 4 domande</h3><ol><li><a href="#d1">Dal dato dell'impianto alla piattaforma</a></li><li><a href="#d2">Linee monitorate, dimensionate sull'utilizzo</a></li><li><a href="#d3">Accesso remoto e IP statico: una scelta da motivare</a></li><li><a href="#d4">Anche i DNS seguono il progetto</a></li></ol></div>
+<div class="box"><span class="over">Ne parliamo?</span><h3>Hai un impianto da collegare?</h3><p>Raccontaci dove si trova, cosa deve comunicare e chi deve accedervi.</p>
+<a class="btn" href="mailto:commerciale@konnectalps.it?subject=Articolo AlpStore: I pannelli producono. I dati devono arrivare.">Scrivici</a><a class="tel" href="tel:+390471840048">0471 840048</a></div>
+<div class="box more"><span class="over">Altri articoli</span><a href="/articoli/la-telecamera-e-lontana-le-regole-devono-esserci">La telecamera è lontana. Le regole devono esserci.</a><a href="/articoli/misura-la-temperatura-scegli-con-chi-comunica">Misura la temperatura. Scegli con chi comunica.</a><a href="/articoli/sede-via-sim-regole-dns">La sede è collegata via rete mobile. Le regole di sicurezza devono arrivare fin lì.</a></div>
+<div class="tags"><span>#AlpsIoT</span><span>#Fotovoltaico</span><span>#Energia</span></div>
+</aside>
+</div>
+</div>
+</main>
+<footer style="border-top: 1px solid #262626; background: #0a0a0a; font-family: 'KA Sans', 'DejaVu Sans', Verdana, sans-serif; color: #fff;">
+<div style="max-width: 1200px; margin: 0 auto; padding: 56px 24px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px;">
+<div>
+<div style="display: flex; align-items: center; gap: 10px;"><span style="width: 30px; height: 30px; border-radius: 50%; background: #c4dfd8; color: #000; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px;">Λ</span><span style="font-weight: 700; font-size: 20px;">AlpStore<span style="color: #c4dfd8;">.</span></span></div>
+<p style="margin: 12px 0 0; color: #bdbdbd; font-size: 14px;">Configurato da noi. Controllato da te.<br>Solo per aziende e pubblica amministrazione.</p>
+<p style="margin: 16px 0 0; font-size: 14px; display: grid; gap: 4px;"><a href="tel:+390471840048" style="color: #fff; text-decoration: none;">0471 840048</a><a href="mailto:commerciale@konnectalps.it" style="color: #fff; text-decoration: none;">commerciale@konnectalps.it</a></p>
+</div>
+<nav aria-label="Soluzioni" style="display: grid; gap: 8px; align-content: start; font-size: 14px;"><div style="font-family: 'KA Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8c8c8c; margin-bottom: 4px;">SOLUZIONI</div>
+<a href="/configuratore/" style="color: #bdbdbd; text-decoration: none;">Progetta la tua soluzione</a><a href="/iot/" style="color: #bdbdbd; text-decoration: none;">IoT e connettività gestita</a><a href="/ip-statico/" style="color: #bdbdbd; text-decoration: none;">IP statico: guida</a><a href="/calcolatore/" style="color: #bdbdbd; text-decoration: none;">Calcolatore dei consumi</a><a href="/settori/" style="color: #bdbdbd; text-decoration: none;">Soluzioni per settore</a><a href="/casi-studio/" style="color: #bdbdbd; text-decoration: none;">Casi studio</a><a href="/#soluzioni" style="color: #bdbdbd; text-decoration: none;">Connessione 5G</a><a href="/videosorveglianza/" style="color: #bdbdbd; text-decoration: none;">Videosorveglianza e sensori</a><a href="/sicurezza/" style="color: #bdbdbd; text-decoration: none;">Sicurezza IoT e sul lavoro</a><a href="/prodotti/" style="color: #bdbdbd; text-decoration: none;">Prodotti</a><a href="/#partner" style="color: #bdbdbd; text-decoration: none;">Per integratori e partner</a></nav>
+<nav aria-label="Condizioni e privacy" style="display: grid; gap: 8px; align-content: start; font-size: 14px;"><div style="font-family: 'KA Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8c8c8c; margin-bottom: 4px;">CONDIZIONI E PRIVACY</div>
+<a href="/condizioni-generali/" style="color: #bdbdbd; text-decoration: none;">Condizioni generali di contratto</a><a href="/documenti/carta-dei-servizi-konnectalps.pdf" style="color: #bdbdbd; text-decoration: none;">Carta dei servizi</a><a href="/condizioni-sim/" style="color: #bdbdbd; text-decoration: none;">Condizioni d'uso della connettività</a><a href="/condizioni-sim/AS-01-condizioni-sim-iot.pdf" style="color: #bdbdbd; text-decoration: none;">Condizioni d'uso della connettività (AS-01, PDF)</a><a href="/condizioni-sim/AS-02-modulo-ordine-sim.pdf" style="color: #bdbdbd; text-decoration: none;">Modulo d'ordine connettività (AS-02, PDF)</a><a href="/privacy/" style="color: #bdbdbd; text-decoration: none;">Privacy e cookie</a></nav>
+<nav aria-label="Risorse" style="display: grid; gap: 8px; align-content: start; font-size: 14px;"><div style="font-family: 'KA Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8c8c8c; margin-bottom: 4px;">RISORSE</div>
+<a href="/articoli/" style="color: #bdbdbd; text-decoration: none;">Articoli</a><a href="https://console.alpstore.it" style="color: #bdbdbd; text-decoration: none;">Accedi al portale</a><a href="https://konnectalps.it/supporto" style="color: #bdbdbd; text-decoration: none;">Supporto clienti KonnectAlps</a><a href="https://tree-nation.com/it/profilo/impatto/konnectalps" target="_blank" rel="noopener" style="color: #bdbdbd; text-decoration: none;">🌱 Azienda green: la nostra foresta su Tree-Nation</a></nav>
+</div>
+<div style="max-width: 1200px; margin: 0 auto; padding: 22px 24px; border-top: 1px solid #262626; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;">
+<div style="display: flex; gap: 10px; align-items: center;"><span style="font-family: 'KA Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8c8c8c; margin-right: 6px;">SEGUICI</span>
+<a href="https://www.linkedin.com/showcase/alpstore/" aria-label="AlpStore su LinkedIn" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid #363636; border-radius: 10px; color: #c4dfd8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a>
+<a href="https://www.instagram.com/alpstore.it/" aria-label="AlpStore su Instagram" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid #363636; border-radius: 10px; color: #c4dfd8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/></svg></a>
+<a href="https://www.facebook.com/share/1HNZ4GDADz/" aria-label="AlpStore su Facebook" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid #363636; border-radius: 10px; color: #c4dfd8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"/></svg></a>
+</div>
+<div style="color: #8c8c8c; font-size: 13px;">Privacy: <a href="mailto:privacy@konnectalps.it" style="color: #bdbdbd;">privacy@konnectalps.it</a> · PEC: <a href="mailto:konnectalps@pec.it" style="color: #bdbdbd;">konnectalps@pec.it</a></div>
+</div>
+<div style="max-width: 1200px; margin: 0 auto; padding: 16px 24px 32px; border-top: 1px solid #262626; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #8c8c8c; font-size: 13px;">
+<span>© 2026 AlpStore è un marchio di KonnectAlps S.r.l. · Via Praga 5, 38121 Trento (TN) · P.IVA 02805640220 · REA TN-229357</span><span>Servizi riservati alle imprese con partita IVA e alla pubblica amministrazione</span></div>
+<script src="/assets/docs.js" defer></script>
+</footer>
+</body>
+</html>
