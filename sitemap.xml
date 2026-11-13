@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url><loc>https://alpstore.it/</loc><lastmod>2026-11-07</lastmod><image:image><image:loc>https://alpstore.it/img/alpstore-router-5g-sim-montagna.jpg</image:loc></image:image><image:image><image:loc>https://alpstore.it/og.png</image:loc></image:image><image:image><image:loc>https://alpstore.it/icon-512.png</image:loc></image:image></url>
-  <url><loc>https://alpstore.it/configuratore/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://alpstore.it/</loc><lastmod>2026-11-13</lastmod><image:image><image:loc>https://alpstore.it/img/alpstore-router-5g-sim-montagna.jpg</image:loc></image:image><image:image><image:loc>https://alpstore.it/og.png</image:loc></image:image><image:image><image:loc>https://alpstore.it/icon-512.png</image:loc></image:image></url>
+  <url><loc>https://alpstore.it/configuratore/</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://alpstore.it/videosorveglianza/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://alpstore.it/sicurezza/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://alpstore.it/prodotti/</loc><lastmod>2026-11-07</lastmod></url>
@@ -12,19 +12,19 @@
   <url><loc>https://alpstore.it/articoli/impianto-lontano-controllo-vicino</loc><image:image><image:loc>https://alpstore.it/articoli/img/impianto-lontano-copertina.jpg</image:loc></image:image><lastmod>2026-11-03</lastmod></url>
   <url><loc>https://alpstore.it/articoli/sim-per-le-macchine</loc><image:image><image:loc>https://alpstore.it/articoli/img/sim-macchine-copertina.jpg</image:loc></image:image><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://alpstore.it/condizioni-generali/</loc><lastmod>2026-11-07</lastmod></url>
-  <url><loc>https://alpstore.it/iot/</loc><lastmod>2026-11-07</lastmod></url>
-  <url><loc>https://alpstore.it/ip-statico/</loc><lastmod>2026-11-07</lastmod></url>
-<url><loc>https://alpstore.it/calcolatore/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://alpstore.it/settori/energia/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://alpstore.it/settori/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://alpstore.it/settori/freddo/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://alpstore.it/iot/</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://alpstore.it/ip-statico/</loc><lastmod>2026-11-13</lastmod></url>
+<url><loc>https://alpstore.it/calcolatore/</loc><lastmod>2026-11-13</lastmod></url>
+<url><loc>https://alpstore.it/settori/energia/</loc><lastmod>2026-11-13</lastmod></url>
+<url><loc>https://alpstore.it/settori/</loc><lastmod>2026-11-13</lastmod></url>
+<url><loc>https://alpstore.it/settori/freddo/</loc><lastmod>2026-11-13</lastmod></url>
 <url><loc>https://alpstore.it/settori/cantieri/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://alpstore.it/settori/flotte/</loc><lastmod>2026-11-08</lastmod></url>
+<url><loc>https://alpstore.it/settori/flotte/</loc><lastmod>2026-11-13</lastmod></url>
 <url><loc>https://alpstore.it/settori/hotel/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://alpstore.it/settori/negozi/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://alpstore.it/casi-studio/</loc><lastmod>2026-11-08</lastmod></url>
+<url><loc>https://alpstore.it/settori/negozi/</loc><lastmod>2026-11-13</lastmod></url>
+<url><loc>https://alpstore.it/casi-studio/</loc><lastmod>2026-11-13</lastmod></url>
 <url><loc>https://alpstore.it/casi-studio/famiglie-cooperative-backup-5g/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://alpstore.it/casi-studio/impianti-energia-zona-di-confine/</loc><lastmod>2026-11-08</lastmod></url>
+<url><loc>https://alpstore.it/casi-studio/impianti-energia-zona-di-confine/</loc><lastmod>2026-11-13</lastmod></url>
 <url><loc>https://alpstore.it/casi-studio/iot-impianti-remoti-accesso/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://alpstore.it/casi-studio/pa-accessi-parcheggi/</loc><lastmod>2026-11-08</lastmod></url>
 </urlset>
