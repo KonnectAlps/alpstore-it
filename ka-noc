@@ -1,0 +1,56 @@
+#!/bin/sh
+# KonnectAlps NOC — collega UN GL.iNet al NOC (NOC-030): tunnel WireGuard verso la 178 e chiave del NOC
+# vincolata a /usr/bin/ka-status. Solo nel tunnel, solo dall'IP del NOC. Idempotente. Stampa solo dati pubblici.
+set -e
+IP=10.99.0.101
+NOC_WG=fcAFjQjIJNU/ReFheredgVLANvNDm/ATMO8WrLsLuk4=
+NOC_SSH="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJqF3SlKZRCKna0VdmnornGkqdrzCjidIXd6yg1JEoO"
+[ -x /usr/bin/ka-status ] || { echo "STOP: manca /usr/bin/ka-status"; exit 1; }
+command -v wg >/dev/null || { echo "STOP: wireguard non presente"; exit 1; }
+umask 077
+[ -s /etc/ka-noc.key ] || wg genkey > /etc/ka-noc.key
+PUB=$(wg pubkey < /etc/ka-noc.key)
+
+uci -q delete network.kanoc || true
+uci set network.kanoc=interface
+uci set network.kanoc.proto=wireguard
+uci set network.kanoc.private_key="$(cat /etc/ka-noc.key)"
+uci add_list network.kanoc.addresses="$IP/32"
+uci -q delete network.kanoc_noc || true
+uci set network.kanoc_noc=wireguard_kanoc
+uci set network.kanoc_noc.description=konnectalps-noc
+uci set network.kanoc_noc.public_key="$NOC_WG"
+uci set network.kanoc_noc.endpoint_host=178.105.138.229
+uci set network.kanoc_noc.endpoint_port=51820
+uci add_list network.kanoc_noc.allowed_ips=10.99.0.1/32
+uci set network.kanoc_noc.route_allowed_ips=1
+uci set network.kanoc_noc.persistent_keepalive=25
+uci commit network
+
+uci -q delete firewall.kanoc_zone || true
+uci set firewall.kanoc_zone=zone
+uci set firewall.kanoc_zone.name=kanoc
+uci set firewall.kanoc_zone.network=kanoc
+uci set firewall.kanoc_zone.input=REJECT
+uci set firewall.kanoc_zone.output=ACCEPT
+uci set firewall.kanoc_zone.forward=REJECT
+uci -q delete firewall.kanoc_ssh || true
+uci set firewall.kanoc_ssh=rule
+uci set firewall.kanoc_ssh.name=KA-NOC-SSH
+uci set firewall.kanoc_ssh.src=kanoc
+uci set firewall.kanoc_ssh.src_ip=10.99.0.1
+uci set firewall.kanoc_ssh.proto=tcp
+uci set firewall.kanoc_ssh.dest_port=22
+uci set firewall.kanoc_ssh.target=ACCEPT
+uci commit firewall
+
+touch /etc/dropbear/authorized_keys; chmod 600 /etc/dropbear/authorized_keys
+sed -i '/noc-konnectalps-glinet/d' /etc/dropbear/authorized_keys
+echo "command=\"/usr/bin/ka-status\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty $NOC_SSH noc-konnectalps-glinet" >> /etc/dropbear/authorized_keys
+for f in /usr/bin/ka-status /etc/dropbear/authorized_keys /etc/ka-noc.key; do grep -qx "$f" /etc/sysupgrade.conf || echo "$f" >> /etc/sysupgrade.conf; done
+
+/etc/init.d/network reload >/dev/null 2>&1; sleep 3; ifup kanoc >/dev/null 2>&1 || true
+/etc/init.d/firewall reload >/dev/null 2>&1
+DBI=$(uci -q get dropbear.@dropbear[0].Interface || true); [ -n "$DBI" ] && echo "NOTA: dropbear ascolta solo su $DBI"
+HK=/etc/dropbear/dropbear_ed25519_host_key; [ -f "$HK" ] || HK=/etc/dropbear/dropbear_rsa_host_key
+echo "KA-NOC $IP $PUB $(dropbearkey -y -f "$HK" | grep '^ssh-' | cut -d' ' -f1,2)"
