@@ -190,7 +190,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 </sc-for>
 </div>
 <div style="margin-top: 28px; max-width: 900px; background: #16201d; border: 1px solid #2f3f3a; border-radius: 16px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start;"><span style="color: #c4dfd8; font-weight: 700; font-size: 20px; line-height: 1;">Λ</span><span><span style="display: block; font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c4dfd8;">COSA PREPARIAMO</span><span style="display: block; margin-top: 4px; color: #d8ebe5;">{{kitNow}}, configurato e protetto da noi, nel tuo portale.</span></span></div>
-<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Linee 5G da 150, 300 o 500 GB, Alps IoT 500 MB a 3,90 € o 1 GB a 4,90 € per linea, dati in comune tra le linee. Da 20 linee in su l'offerta è su progetto. Nessuna linea si blocca.</p>
+<p style="color: #8c8c8c; margin: 24px 0 0; font-size: 14px;">Linee 5G da 300 GB, 500 GB o 1 TB, Alps IoT 500 MB a 3,90 € o 1 GB a 4,90 € per linea, dati in comune tra le linee. Da 20 linee in su l'offerta è su progetto. Nessuna linea si blocca.</p>
 </sc-if>
 
 <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
@@ -316,7 +316,7 @@ class Component extends DCLogic {
       { id: 'impianti', tag: 'IMPIANTI', t: 'Macchinari e impianti', d: 'Teleassistenza sicura.', q: 'Quanti impianti?', rec: ['monitor', 'vpn'], kit: 'Router industriale con VPN gestita' },
       { id: 'parcheggi', tag: 'PARCHEGGI', t: 'Parcheggi e piazzali', d: 'Targhe, sbarre e accessi.', q: 'Quanti varchi o ingressi?', rec: ['monitor', 'cam', 'accessi'], kit: 'Telecamere con lettura targhe e router 5G' },
       { id: 'rifugi', tag: 'RIFUGI', t: 'Rifugi e strutture isolate', d: 'Dove non arriva nessuno.', q: 'Quante strutture?', rec: ['monitor', 'sensori', 'cam'], kit: 'Router 5G o satellitare con sensori e telecamere' },
-      { id: 'conn5g', tag: '5G', t: 'Connessione 5G', d: 'Tagli da 150, 300 o 500 GB.', q: 'Quante sedi?', rec: ['monitor', 'dns', 'ipstatico'], kit: 'Router 5G gestito con linea 5G da 150, 300 o 500 GB, con o senza IP pubblico' },
+      { id: 'conn5g', tag: '5G', t: 'Connessione 5G', d: 'Tagli da 300 GB, 500 GB o 1 TB.', q: 'Quante sedi?', rec: ['monitor', 'dns', 'ipstatico'], kit: 'Router 5G gestito con linea 5G da 300 GB, 500 GB o 1 TB, con o senza IP pubblico' },
       { id: 'lavoratori', tag: 'PERSONE', t: 'Chi lavora da solo', d: 'SOS e uomo a terra.', q: 'Quante persone?', rec: ['monitor', 'sos'], kit: 'Localizzatore personale con SOS e rilevamento caduta' }
     ];
     const OPTS = [
