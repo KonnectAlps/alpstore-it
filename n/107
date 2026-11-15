@@ -1,0 +1,185 @@
+#!/bin/sh
+# KonnectAlps NOC: ka-status v2.1 + collegamento al NOC, IP 10.99.0.107. Solo dati pubblici.
+cat > /usr/bin/ka-status <<'KAEOF'
+#!/bin/sh
+# ka-status v2.1 — KonnectAlps NOC, GL.iNet (Flint 2 GL-MT6000, Flint 3 GL-BE9300, firmware 4.x)
+# SOLA LETTURA: stampa lo stato del router in JSON e basta.
+# Non modifica nulla, non legge password, non legge i dispositivi della LAN.
+# Spec: konnectalps-noc docs/SPEC-NOC-030-GLINET.md
+
+. /usr/share/libubox/jshn.sh
+
+PING_HOST="1.1.1.1"
+
+get() { [ -n "$1" ] && jsonfilter -s "$1" -e "$2" 2>/dev/null; }
+
+board=$(ubus call system board 2>/dev/null)
+info=$(ubus call system info 2>/dev/null)
+dump=$(ubus call network.interface dump 2>/dev/null)
+
+model=$(cat /proc/gl-hw-info/model 2>/dev/null)
+[ -z "$model" ] && model=$(get "$board" '@.model')
+owrt=$(get "$board" '@.release.version')
+glver=$(cat /etc/glversion 2>/dev/null)
+uptime_s=$(get "$info" '@.uptime')
+mem_total=$(get "$info" '@.memory.total')
+mem_free=$(get "$info" '@.memory.free')
+
+# Dispositivi usati dalle rotte predefinite (da dove esce il traffico adesso).
+defdevs=$(ip -4 route show default 2>/dev/null | sed -n 's/.* dev \([^ ]*\).*/\1/p' | sort -u)
+is_active() { for d in $defdevs; do [ "$d" = "$1" ] && return 0; done; return 1; }
+
+json_init
+json_add_string schema "ka-status/2"
+json_add_string vendor "glinet"
+json_add_string model "${model:-}"
+json_add_string firmware "${glver:-}"
+json_add_string openwrt "${owrt:-}"
+json_add_int uptime_s "${uptime_s:-0}"
+json_add_int mem_total "${mem_total:-0}"
+json_add_int mem_free "${mem_free:-0}"
+
+# Uscite: wan, secondwan, wwan (ripetitore), tethering, modem (4G/5G).
+active=""
+json_add_array wan
+for n in $(get "$dump" '@.interface[*].interface'); do
+  case "$n" in
+    wan|wan2|secondwan|wwan|tethering|modem*) ;;
+    *) continue ;;
+  esac
+  sel="@.interface[@.interface='$n']"
+  up=$(get "$dump" "$sel.up")
+  proto=$(get "$dump" "$sel.proto")
+  ipv4=$(get "$dump" "$sel['ipv4-address'][0].address")
+  iup=$(get "$dump" "$sel.uptime")
+  dev=$(get "$dump" "$sel.l3_device")
+  json_add_object
+  json_add_string name "$n"
+  [ "$up" = "true" ] && json_add_boolean up 1 || json_add_boolean up 0
+  json_add_string proto "${proto:-}"
+  json_add_string ipv4 "${ipv4:-}"
+  json_add_int uptime_s "${iup:-0}"
+  # Contatori della porta (byte dall'accensione del router; il NOC calcola le differenze). Stringhe: possono
+  # superare i 2^31 che jshn gestisce come intero. Campi in più, lo schema resta ka-status/2.
+  if [ -n "$dev" ] && [ -r "/sys/class/net/$dev/statistics/rx_bytes" ]; then
+    json_add_string rx_bytes "$(cat /sys/class/net/$dev/statistics/rx_bytes)"
+    json_add_string tx_bytes "$(cat /sys/class/net/$dev/statistics/tx_bytes)"
+  fi
+  if [ "$up" = "true" ] && [ -n "$dev" ] && is_active "$dev"; then
+    json_add_boolean active 1; active="$active $n"
+  else
+    json_add_boolean active 0
+  fi
+  json_close_object
+done
+json_close_array
+
+# Multi-WAN GL.iNet (kmwan): configurazione in sola lettura.
+mode=$(uci -q get kmwan.global.mode)
+enabled=$(uci -q get kmwan.global.enable)
+primary=""; pmetric=99999; nmembers=0
+json_add_object multiwan
+json_add_string source "kmwan"
+[ "$enabled" = "1" ] && json_add_boolean enabled 1 || json_add_boolean enabled 0
+json_add_string mode "${mode:-}"
+json_add_array members
+for m in $(uci -q show kmwan | sed -n 's/^kmwan\.\([^.=]*\)=member$/\1/p'); do
+  ifn=$(uci -q get kmwan.$m.interface)
+  met=$(uci -q get kmwan.$m.metric)
+  wei=$(uci -q get kmwan.$m.weight)
+  dis=$(uci -q get kmwan.$m.disabled)
+  json_add_object
+  json_add_string name "${ifn:-$m}"
+  json_add_int metric "${met:-0}"
+  json_add_int weight "${wei:-0}"
+  [ "$dis" = "1" ] && json_add_boolean disabled 1 || json_add_boolean disabled 0
+  json_close_object
+  if [ "$dis" != "1" ] && [ -n "$met" ]; then
+    nmembers=$((nmembers + 1))
+    [ "$met" -lt "$pmetric" ] && { pmetric=$met; primary=${ifn:-$m}; }
+  fi
+done
+json_close_array
+
+# Stato: principale, riserva, bilanciato, linea_unica, nessuna_uscita.
+nact=$(echo $active | wc -w)
+state="nessuna_uscita"
+if [ "$nact" -gt 1 ]; then state="bilanciato"
+elif [ "$nact" -eq 1 ]; then
+  a=$(echo $active)
+  if [ "$enabled" != "1" ] || [ "$nmembers" -le 1 ]; then state="linea_unica"
+  elif [ "$a" = "$primary" ]; then state="principale"
+  else state="riserva"; fi
+fi
+json_add_string primary "${primary:-}"
+json_add_string state "$state"
+json_close_object
+
+# Qualita' della linea: 5 ping verso un server esterno.
+out=$(ping -c 5 -W 2 "$PING_HOST" 2>/dev/null)
+loss=$(echo "$out" | sed -n 's/.* \([0-9]*\)% packet loss.*/\1/p')
+avg=$(echo "$out" | sed -n 's#.*= [0-9.]*/\([0-9.]*\)/.*#\1#p')
+json_add_object ping
+json_add_string host "$PING_HOST"
+json_add_int loss_pct "${loss:-100}"
+json_add_string avg_ms "${avg:-}"
+json_close_object
+
+json_dump
+KAEOF
+chmod 755 /usr/bin/ka-status
+# KonnectAlps NOC — collega UN GL.iNet al NOC (NOC-030): tunnel WireGuard verso la 178 e chiave del NOC
+# vincolata a /usr/bin/ka-status. Solo nel tunnel, solo dall'IP del NOC. Idempotente. Stampa solo dati pubblici.
+set -e
+IP=10.99.0.107
+NOC_WG=fcAFjQjIJNU/ReFheredgVLANvNDm/ATMO8WrLsLuk4=
+NOC_SSH="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJqF3SlKZRCKna0VdmnornGkqdrzCjidIXd6yg1JEoO"
+[ -x /usr/bin/ka-status ] || { echo "STOP: manca /usr/bin/ka-status"; exit 1; }
+command -v wg >/dev/null || { echo "STOP: wireguard non presente"; exit 1; }
+umask 077
+[ -s /etc/ka-noc.key ] || wg genkey > /etc/ka-noc.key
+PUB=$(wg pubkey < /etc/ka-noc.key)
+
+uci -q delete network.kanoc || true
+uci set network.kanoc=interface
+uci set network.kanoc.proto=wireguard
+uci set network.kanoc.private_key="$(cat /etc/ka-noc.key)"
+uci add_list network.kanoc.addresses="$IP/32"
+uci -q delete network.kanoc_noc || true
+uci set network.kanoc_noc=wireguard_kanoc
+uci set network.kanoc_noc.description=konnectalps-noc
+uci set network.kanoc_noc.public_key="$NOC_WG"
+uci set network.kanoc_noc.endpoint_host=178.105.138.229
+uci set network.kanoc_noc.endpoint_port=51820
+uci add_list network.kanoc_noc.allowed_ips=10.99.0.1/32
+uci set network.kanoc_noc.route_allowed_ips=1
+uci set network.kanoc_noc.persistent_keepalive=25
+uci commit network
+
+uci -q delete firewall.kanoc_zone || true
+uci set firewall.kanoc_zone=zone
+uci set firewall.kanoc_zone.name=kanoc
+uci set firewall.kanoc_zone.network=kanoc
+uci set firewall.kanoc_zone.input=REJECT
+uci set firewall.kanoc_zone.output=ACCEPT
+uci set firewall.kanoc_zone.forward=REJECT
+uci -q delete firewall.kanoc_ssh || true
+uci set firewall.kanoc_ssh=rule
+uci set firewall.kanoc_ssh.name=KA-NOC-SSH
+uci set firewall.kanoc_ssh.src=kanoc
+uci set firewall.kanoc_ssh.src_ip=10.99.0.1
+uci set firewall.kanoc_ssh.proto=tcp
+uci set firewall.kanoc_ssh.dest_port=22
+uci set firewall.kanoc_ssh.target=ACCEPT
+uci commit firewall
+
+touch /etc/dropbear/authorized_keys; chmod 600 /etc/dropbear/authorized_keys
+sed -i '/noc-konnectalps-glinet/d' /etc/dropbear/authorized_keys
+echo "command=\"/usr/bin/ka-status\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty $NOC_SSH noc-konnectalps-glinet" >> /etc/dropbear/authorized_keys
+for f in /usr/bin/ka-status /etc/dropbear/authorized_keys /etc/ka-noc.key; do grep -qx "$f" /etc/sysupgrade.conf || echo "$f" >> /etc/sysupgrade.conf; done
+
+/etc/init.d/network reload >/dev/null 2>&1; sleep 3; ifup kanoc >/dev/null 2>&1 || true
+/etc/init.d/firewall reload >/dev/null 2>&1
+DBI=$(uci -q get dropbear.@dropbear[0].Interface || true); [ -n "$DBI" ] && echo "NOTA: dropbear ascolta solo su $DBI"
+HK=/etc/dropbear/dropbear_ed25519_host_key; [ -f "$HK" ] || HK=/etc/dropbear/dropbear_rsa_host_key
+echo "KA-NOC $IP $PUB $(dropbearkey -y -f "$HK" | grep '^ssh-' | cut -d' ' -f1,2)"
