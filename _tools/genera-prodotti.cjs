@@ -109,3 +109,22 @@ const xml = (s) => esc(s).replace(/'/g, '&apos;');
 sm = sm.replace('</urlset>', urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod>${u.img ? `<image:image><image:loc>${xml(u.img)}</image:loc></image:image>` : ''}</url>`).join('\n') + '\n</urlset>');
 fs.writeFileSync(smPath, sm);
 console.log(`${P.length} pagine prodotto, sitemap aggiornata`);
+
+// Elenco prodotti nei dati strutturati di /prodotti/ (ItemList) rigenerato dall'elenco P: prezzi, foto e pagina giusti.
+{
+  const listPath = path.join(ROOT, 'prodotti/index.html');
+  let html = fs.readFileSync(listPath, 'utf8');
+  const list = {
+    '@context': 'https://schema.org', '@type': 'ItemList', name: 'Prodotti AlpStore',
+    itemListElement: P.map((p, i) => {
+      const brand = BRAND[p.brand] || p.brand;
+      const url = `https://alpstore.it/prodotti/${slug(p)}/`;
+      return { '@type': 'ListItem', position: i + 1, url, item: {
+        '@type': 'Product', name: `${brand} ${p.n}`, description: p.d, brand: { '@type': 'Brand', name: brand }, image: p.img ? img(p.img, 900) : 'https://alpstore.it/og.png', url,
+        ...(p.price ? { offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'EUR', url, priceSpecification: { '@type': 'PriceSpecification', price: String(p.price), priceCurrency: 'EUR', valueAddedTaxIncluded: false }, seller: { '@type': 'Organization', name: 'KonnectAlps S.r.l.' } } } : {}),
+      } };
+    }),
+  };
+  html = html.replace(/<script type="application\/ld\+json">\{"@context": ?"https:\/\/schema\.org", ?"@type": ?"ItemList"[\s\S]*?<\/script>/, `<script type="application/ld+json">${JSON.stringify(list)}</script>`);
+  fs.writeFileSync(listPath, html);
+}
