@@ -1102,7 +1102,7 @@ body{margin:0;background:#000;color:#fff}a{color:#c4dfd8}a:hover{color:#d8ebe5}b
 <span style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #c4dfd8;">{{p.brand}}</span><sc-if value="{{p.isNew}}" hint-placeholder-val="{{ false }}"><span style="margin-left:8px;font-family:'KA Mono', 'DejaVu Sans Mono', monospace;font-size:10px;letter-spacing:0.14em;color:#000;background:#c4dfd8;border-radius:999px;padding:3px 8px;">NOVITÀ</span></sc-if>
 <span style="font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 11px; color: #8c8c8c;">{{p.cat}}</span>
 </div>
-<div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 18px; line-height: 1.2;">{{p.n}}</div>
+<div style="font-family: 'KA Sans', 'DejaVu Sans', sans-serif; font-weight: 600; font-size: 18px; line-height: 1.2;"><a href="{{p.page}}" style="color: inherit; text-decoration: none;">{{p.n}}</a></div>
 <div style="color: #a6a6a6; font-size: 14px; flex: 1;">{{p.d}}</div>
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-top: 1px solid #262626; padding-top: 10px;"><button type="button" onClick="{{p.open}}" style="background: none; border: 0; padding: 0; color: #c4dfd8; font-size: 13px; font-weight: 600; cursor: pointer;">Dettagli e opzioni</button><span style="font-weight: 700; font-size: 18px;">{{p.priceLabel}}</span></div>
 <sc-if value="{{p.inCart}}" hint-placeholder-val="{{ false }}">
@@ -1259,7 +1259,7 @@ class Component extends DCLogic {
     };
     const NEW = { r7: 1, r8: 1 };
     const deco = (p) => ({ ...p, isNew: !!NEW[p.id], docs: DOCS[p.c] || '', hasDocs: !!DOCS[p.c], ph: label[p.c].toUpperCase(), hasImg: !!p.img, noImg: !p.img, imgBg: p.img ? '#f2f3f3' : '#1a1a1a', thumb: p.img ? img(p.img, 360) : '', big: p.img ? img(p.img, 900) : '',
-      priceLabel: p.price ? (p.id === 'sens3' || p.from ? 'da ' : '') + p.price.toLocaleString('it-IT', { minimumFractionDigits: p.price % 1 ? 2 : 0 }) + ' €' : 'Su richiesta', priceNote: p.price ? 'Prezzo del listino ufficiale Ubiquiti Store Europa' : 'Prezzo con l\u2019offerta',
+      page: '/prodotti/' + ({UNIFI:'UniFi',TELTONIKA:'Teltonika',MIKROTIK:'MikroTik',ZTE:'ZTE',HUAWEI:'Huawei'}[p.brand] + ' ' + p.n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '/', priceLabel: p.price ? (p.id === 'sens3' || p.from ? 'da ' : '') + p.price.toLocaleString('it-IT', { minimumFractionDigits: p.price % 1 ? 2 : 0 }) + ' €' : 'Su richiesta', priceNote: p.price ? 'Prezzo del listino ufficiale Ubiquiti Store Europa' : 'Prezzo con l\u2019offerta',
       hasUrl: !!p.url, open: () => set({ sel: p.id }), addLabel: cart[p.id] ? 'Aggiungi un altro (' + cart[p.id] + ' in richiesta)' : 'Aggiungi alla richiesta', inc: () => add(p.id, 1) });
     const dsel = P.find((x) => x.id === S.sel);
     const vis = P.filter((p) => S.cat === 'tutti' || p.c === S.cat);
