@@ -59,6 +59,10 @@ function page(p) {
     .replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${esc(desc)}">`)
     .replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${url}">`)
     .replace(/<meta property="og:type" content="[^"]*">/, '<meta property="og:type" content="product">')
+    // Immagine del prodotto per anteprime social e Google Immagini (16/11/2026); senza foto resta quella del sito.
+    .replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${esc(p.img ? img(p.img, 1200) : 'https://alpstore.it/og.png?v=3')}">`)
+    .replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${esc(name)}">`)
+    .replace(/<meta name="twitter:image:alt" content="[^"]*">/, `<meta name="twitter:image:alt" content="${esc(name)}">`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/g, '');
   head += `<script type="application/ld+json">${JSON.stringify(ld)}</script>\n<script type="application/ld+json">${JSON.stringify(crumbs)}</script>\n`;
   const mono = "font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: #c4dfd8;";
@@ -95,11 +99,13 @@ for (const p of P) {
   const dir = path.join(ROOT, 'prodotti', slug(p));
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), page(p));
-  urls.push(`https://alpstore.it/prodotti/${slug(p)}/`);
+  urls.push({ loc: `https://alpstore.it/prodotti/${slug(p)}/`, img: p.img ? img(p.img, 1200) : null, title: `${BRAND[p.brand] || p.brand} ${p.n}` });
 }
 // Sitemap: righe dei prodotti rigenerate da zero, il resto resta com'è.
 const smPath = path.join(ROOT, 'sitemap.xml');
 let sm = fs.readFileSync(smPath, 'utf8').replace(/\s*<url><loc>https:\/\/alpstore\.it\/prodotti\/[^<]+\/<\/loc>[^\n]*<\/url>/g, (m) => (/\/prodotti\/<\/loc>/.test(m) ? m : ''));
-sm = sm.replace('</urlset>', urls.map((u) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join('\n') + '\n</urlset>');
+// Ogni pagina prodotto porta la sua foto nella sitemap immagini (Google Immagini).
+const xml = (s) => esc(s).replace(/'/g, '&apos;');
+sm = sm.replace('</urlset>', urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod>${u.img ? `<image:image><image:loc>${xml(u.img)}</image:loc></image:image>` : ''}</url>`).join('\n') + '\n</urlset>');
 fs.writeFileSync(smPath, sm);
 console.log(`${P.length} pagine prodotto, sitemap aggiornata`);
