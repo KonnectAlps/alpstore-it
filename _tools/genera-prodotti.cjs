@@ -14,6 +14,8 @@ const pick = (name) => {
 };
 const P = pick('P');
 const CATS = Object.fromEntries(pick('CATS'));
+// Vendita solo ad aziende e PA: nessun reso (Ezio, 16/11/2026). Le spese di spedizione dipendono dall'ordine: niente tariffa fissa nei dati.
+const RETURNS = { '@type': 'MerchantReturnPolicy', applicableCountry: 'IT', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted' };
 const BRAND = { UNIFI: 'UniFi', TELTONIKA: 'Teltonika', MIKROTIK: 'MikroTik', ZTE: 'ZTE', HUAWEI: 'Huawei' };
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const slug = (p) => `${BRAND[p.brand] || p.brand} ${p.n}`.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -42,7 +44,7 @@ function page(p) {
     image: p.img || 'https://alpstore.it/og.png',
     url,
     ...(p.price
-      ? { offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'EUR', url, availability: 'https://schema.org/InStock', priceSpecification: { '@type': 'PriceSpecification', price: String(p.price), priceCurrency: 'EUR', valueAddedTaxIncluded: false }, seller: { '@type': 'Organization', name: 'KonnectAlps S.r.l.' } } }
+      ? { offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'EUR', url, availability: 'https://schema.org/InStock', priceSpecification: { '@type': 'PriceSpecification', price: String(p.price), priceCurrency: 'EUR', valueAddedTaxIncluded: false }, seller: { '@type': 'Organization', name: 'KonnectAlps S.r.l.' }, hasMerchantReturnPolicy: RETURNS } }
       : {}),
   };
   const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
