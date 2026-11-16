@@ -14,13 +14,13 @@ const desc = 'SD-WAN per aziende: fibra, FWA, 5G e satellite uniti in una sola c
 const faq = [
   ['Che differenza c’è tra failover e bonding?', 'Con il failover, se la linea principale cade il traffico passa sull’altra in pochi secondi. Con il bonding le linee lavorano insieme: la banda si somma e, se una cade, le chiamate, le VPN e le videochiamate non si interrompono.'],
   ['Serve cambiare le linee che ho già?', 'No. L’SD-WAN lavora sopra le linee che ci sono: fibra, FWA, 5G o satellite, anche di operatori diversi. Aggiungiamo solo quello che manca, per esempio una SIM 5G come seconda linea.'],
-  ['Quanto costa?', 'Failover da 19 € al mese per sede, bonding 35 €, multisede con IP unico e rete privata 49 €, con il monitoraggio compreso. Router e linee a parte, in vendita o a noleggio.'],
+  ['Quanto costa?', 'Il failover costa 19 € al mese per sede, con il monitoraggio compreso. Bonding e multisede li prezziamo su progetto, in base a sedi, linee e banda. Router e linee a parte, in vendita o a noleggio.'],
 ];
 
 const tiers = [
   ['FAILOVER', 'SD-WAN Failover', 19, 99, ['Cambio linea automatico in pochi secondi', 'Due o più linee anche di operatori diversi', 'Avvisi e storico dei cambi di linea']],
-  ['BONDING', 'SD-WAN Bonding', 35, 149, ['Linee sommate: più banda', 'Chiamate, VPN e videochiamate senza interruzioni', 'Teltonika WANplex o concentratore KonnectAlps']],
-  ['MULTISEDE', 'SD-WAN Multisede', 49, 199, ['IP statico unico che non cambia', 'Sedi collegate in rete privata cifrata', 'Priorità a voce e casse']],
+  ['BONDING', 'SD-WAN Bonding', null, null, ['Linee sommate: più banda', 'Chiamate, VPN e videochiamate senza interruzioni', 'Teltonika WANplex o concentratore KonnectAlps']],
+  ['MULTISEDE', 'SD-WAN Multisede', null, null, ['IP statico unico che non cambia', 'Sedi collegate in rete privata cifrata', 'Priorità a voce e casse']],
 ];
 const mono = "font-family: 'KA Mono', 'DejaVu Sans Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: #c4dfd8;";
 const card = (k, t, body) => `<div style="flex: 1 1 320px; min-width: 0; background: #111111; border: 1px solid #363636; border-radius: 16px; padding: 24px;">
@@ -52,9 +52,9 @@ ${li(['IP statico unico per centralino, telecamere e accessi da remoto', 'Più s
 <section style="max-width: 1200px; margin: 0 auto; padding: 56px 24px;">
 <h2 style="margin: 0 0 22px; font-size: 34px; line-height: 1.1;">Prezzi</h2>
 <div style="display: flex; flex-wrap: wrap; gap: 18px;">
-${tiers.map(([k, t, can, att, body]) => card(k, t, `<p style="margin: 0 0 6px; font-size: 30px; font-weight: 700;">${can} €<span style="font-size: 15px; font-weight: 400; color: #8c8c8c;"> /mese per sede</span></p><p style="margin: 0 0 12px; color: #8c8c8c; font-size: 14px;">Attivazione ${att} €</p>${li(body)}`)).join('\n')}
+${tiers.map(([k, t, can, att, body]) => card(k, t, (can ? `<p style="margin: 0 0 6px; font-size: 30px; font-weight: 700;">${can} €<span style="font-size: 15px; font-weight: 400; color: #8c8c8c;"> /mese per sede</span></p><p style="margin: 0 0 12px; color: #8c8c8c; font-size: 14px;">Attivazione ${att} €</p>` : `<p style="margin: 0 0 6px; font-size: 30px; font-weight: 700;">Su progetto</p><p style="margin: 0 0 12px; color: #8c8c8c; font-size: 14px;">In base a sedi, linee e banda</p>`) + li(body))).join('\n')}
 </div>
-<p style="margin: 16px 0 0; color: #8c8c8c; font-size: 14px;">Monitoraggio h24 compreso. Router e linee a parte, in vendita o a noleggio.</p>
+<p style="margin: 16px 0 0; color: #8c8c8c; font-size: 14px;">Monitoraggio h24 compreso. Router e linee a parte, in vendita o a noleggio. <a href="/configuratore/" style="color: #c4dfd8;">Chiedi un progetto</a>.</p>
 </section>
 <section style="max-width: 1200px; margin: 0 auto; padding: 56px 24px;">
 <h2 style="margin: 0 0 22px; font-size: 34px; line-height: 1.1;">Come lavoriamo</h2>
@@ -72,7 +72,7 @@ ${card('3 · MONITORAGGIO', 'Sempre sotto controllo', '<p style="margin: 0; colo
 </main>`;
 
 const ld = [
-  { '@context': 'https://schema.org', '@type': 'Service', name: 'SD-WAN e bonding delle linee', serviceType: 'SD-WAN', description: desc, url, areaServed: 'IT', provider: { '@type': 'Organization', name: 'KonnectAlps S.r.l.', url: 'https://alpstore.it/' }, offers: tiers.map(([, t, can]) => ({ '@type': 'Offer', name: t, price: String(can), priceCurrency: 'EUR', priceSpecification: { '@type': 'UnitPriceSpecification', price: String(can), priceCurrency: 'EUR', unitText: 'mese per sede', valueAddedTaxIncluded: false } })) },
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'SD-WAN e bonding delle linee', serviceType: 'SD-WAN', description: desc, url, areaServed: 'IT', provider: { '@type': 'Organization', name: 'KonnectAlps S.r.l.', url: 'https://alpstore.it/' }, offers: tiers.filter((x) => x[2]).map(([, t, can]) => ({ '@type': 'Offer', name: t, price: String(can), priceCurrency: 'EUR', priceSpecification: { '@type': 'UnitPriceSpecification', price: String(can), priceCurrency: 'EUR', unitText: 'mese per sede', valueAddedTaxIncluded: false } })) },
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
 ];
 const headEnd = base.indexOf('</head>');
