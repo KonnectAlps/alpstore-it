@@ -1143,7 +1143,7 @@ class Component extends DCLogic {
         (qr ? '<div class="qr"><div class="bx">' + qr + '</div><p>Inquadra per riaprire questa richiesta sul sito</p></div>' : '') + '</div>' +
         '<div class="nx"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro 48 ore lavorative. Tutto arriva configurato, protetto e nel monitoraggio.</div>' +
         '<div class="ft"><div class="mu">0471 840048 · commerciale@konnectalps.it · alpstore.it</div><div class="mu">KonnectAlps S.r.l. · Via Praga 5, 38121 Trento · P.IVA 02805640220</div></div>' +
-        '<p class="mu" style="margin-top:10px">Questo documento è un riepilogo, non un’offerta né un contratto: prezzi e condizioni sono quelli dell’offerta che riceverai.</p>' +
+        '<p class="mu" style="margin-top:10px">Questo documento è un riepilogo, non un’offerta né un contratto. I prezzi possono variare con i listini dei produttori (per esempio per i rincari di memorie e componenti): valgono prezzi e condizioni dell’offerta che riceverai.</p>' +
         '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
       w.document.close();
     };
@@ -1218,7 +1218,7 @@ class Component extends DCLogic {
     };
     const NEW = { r7: 1, r8: 1 };
     const deco = (p) => ({ ...p, isNew: !!NEW[p.id], docs: DOCS[p.c] || '', hasDocs: !!DOCS[p.c], ph: label[p.c].toUpperCase(), hasImg: !!p.img, noImg: !p.img, imgBg: p.img ? '#f2f3f3' : '#1a1a1a', thumb: p.img ? img(p.img, 360) : '', big: p.img ? img(p.img, 900) : '',
-      page: '/prodotti/' + ({UNIFI:'UniFi',TELTONIKA:'Teltonika',MIKROTIK:'MikroTik',ZTE:'ZTE'}[p.brand] + ' ' + p.n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '/', priceLabel: p.price ? (p.id === 'sens3' || p.from ? 'da ' : '') + p.price.toLocaleString('it-IT', { minimumFractionDigits: p.price % 1 ? 2 : 0 }) + ' €' : 'Su richiesta', priceNote: p.price ? 'Prezzo finale, nessun sovrapprezzo in fase d\u2019ordine' : 'Prezzo con l\u2019offerta',
+      page: '/prodotti/' + ({UNIFI:'UniFi',TELTONIKA:'Teltonika',MIKROTIK:'MikroTik',ZTE:'ZTE'}[p.brand] + ' ' + p.n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '/', priceLabel: p.price ? (p.id === 'sens3' || p.from ? 'da ' : '') + p.price.toLocaleString('it-IT', { minimumFractionDigits: p.price % 1 ? 2 : 0 }) + ' €' : 'Su richiesta', priceNote: p.price ? 'Prezzo finale, nessun sovrapprezzo in fase d\u2019ordine. Pu\u00f2 variare con i listini dei produttori.' : 'Prezzo con l\u2019offerta',
       hasUrl: !!p.url, open: () => set({ sel: p.id }), addLabel: cart[p.id] ? 'Aggiungi un altro (' + cart[p.id] + ' in richiesta)' : 'Aggiungi alla richiesta', inc: () => add(p.id, 1) });
     const dsel = P.find((x) => x.id === S.sel);
     const vis = P.filter((p) => S.cat === 'tutti' || p.c === S.cat);
