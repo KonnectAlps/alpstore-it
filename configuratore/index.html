@@ -281,10 +281,10 @@ class Component extends DCLogic {
       const data = pad(now.getDate()) + '/' + pad(now.getMonth() + 1) + '/' + now.getFullYear();
       let qr = '';
       try { if (link && typeof qrcode === 'function') { const q = qrcode(0, 'M'); q.addData(link); q.make(); qr = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); } } catch (e) { qr = ''; }
-      const w = window.open('', '_blank'); if (!w) return;
+      const w = { document: { h: '', write(x) { this.h += x; } } };
       const tr = (r) => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1] || '—') + '</td></tr>';
-      w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>' + esc(title) + ' ' + num + '</title><style>' +
-        '@font-face{font-family:KA;src:url(/fonts/ka-sans-400.woff2)}@font-face{font-family:KA;src:url(/fonts/ka-sans-700.woff2);font-weight:700}@font-face{font-family:KM;src:url(/fonts/ka-mono-400.woff2)}' +
+      w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(title) + ' ' + num + '</title><style>' +
+        '@font-face{font-family:KA;src:url(' + location.origin + '/fonts/ka-sans-400.woff2)}@font-face{font-family:KA;src:url(' + location.origin + '/fonts/ka-sans-700.woff2);font-weight:700}@font-face{font-family:KM;src:url(' + location.origin + '/fonts/ka-mono-400.woff2)}' +
         '@page{size:A4;margin:0}*{box-sizing:border-box}html,body{margin:0;background:#000;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}' +
         'body{font-family:KA,"DejaVu Sans",Verdana,sans-serif;padding:16mm 16mm 14mm;min-height:297mm;max-width:210mm;margin:0 auto}' +
         '.top{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #2a2a2a}.lg{display:flex;align-items:center;gap:10px}.mk{width:34px;height:34px;border-radius:50%;background:#c4dfd8;color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}' +
@@ -294,6 +294,7 @@ class Component extends DCLogic {
         'table{width:100%;border-collapse:collapse}td{padding:8px 0;border-bottom:1px solid #222;font-size:13px;vertical-align:top}tr:last-child td{border-bottom:0}td:first-child{color:#8c8c8c;width:36%}' +
         '.qr{width:150px;flex:none;text-align:center}.qr .bx{background:#fff;border-radius:12px;padding:10px}.qr svg{width:100%;height:auto;display:block}.qr p{font-size:11px;color:#bdbdbd;margin:8px 0 0}' +
         '.nx{background:#16201d;border:1px solid #2f3f3a;border-radius:14px;padding:14px 16px;font-size:13px;color:#d8ebe5}.ft{margin-top:22px;padding-top:12px;border-top:1px solid #2a2a2a;display:flex;justify-content:space-between;gap:12px}' +
+        '@media screen and (max-width:700px){body{padding:20px 16px 90px;min-height:0}.grid{flex-direction:column;align-items:stretch}.qr{width:140px;margin:0 auto}.ft{flex-direction:column}}@media print{.np{display:none!important}}.np{position:fixed;left:0;right:0;bottom:0;padding:12px 16px;background:#000;border-top:1px solid #2a2a2a;display:flex;gap:10px;justify-content:center}.np button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 18px;background:#c4dfd8;color:#000}.np a{color:#c4dfd8;align-self:center;font-size:14px}' +
         '</style></head><body>' +
         '<div class="top"><div class="lg"><div class="mk">Λ</div><div><div class="nm">AlpStore<i>.</i></div><div class="mu">by KonnectAlps</div></div></div><div style="text-align:right"><div class="ov">Richiesta</div><div style="font-family:KM,monospace;font-size:14px;margin-top:2px">' + num + '</div><div class="mu">' + data + '</div></div></div>' +
         '<h1>' + esc(title) + '</h1><p class="sl">Configurato da noi. Controllato da te.</p>' +
@@ -303,8 +304,10 @@ class Component extends DCLogic {
         '<div class="nx"><b>Cosa succede adesso.</b> Un tecnico KonnectAlps verifica il progetto e ti manda l’offerta con prezzi e tempi entro 48 ore lavorative. Tutto arriva configurato, protetto e nel monitoraggio.</div>' +
         '<div class="ft"><div class="mu">0471 840048 · commerciale@konnectalps.it · alpstore.it</div><div class="mu">KonnectAlps S.r.l. · Via Praga 5, 38121 Trento · P.IVA 02805640220</div></div>' +
         '<p class="mu" style="margin-top:10px">Questo documento è un riepilogo, non un’offerta né un contratto. I prezzi possono variare con i listini dei produttori (per esempio per i rincari di memorie e componenti): valgono prezzi e condizioni dell’offerta che riceverai.</p>' +
-        '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
-      w.document.close();
+        '<div class="np"><button type="button" onclick="window.print()">Stampa o salva PDF</button></div>' +
+        '<script>window.onload=function(){setTimeout(function(){try{window.print()}catch(e){}},400)}<\/script></body></html>');
+      const url = URL.createObjectURL(new Blob([w.document.h], { type: 'text/html' }));
+      const win = window.open(url, '_blank'); if (!win) location.href = url;
     };
     const enc = (o) => { try { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); } catch (e) { return ''; } };
     const S = this.state;
