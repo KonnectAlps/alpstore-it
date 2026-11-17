@@ -1147,8 +1147,19 @@ class Component extends DCLogic {
         '<p class="mu" style="margin-top:10px">Questo documento è un riepilogo, non un’offerta né un contratto. I prezzi possono variare con i listini dei produttori (per esempio per i rincari di memorie e componenti): valgono prezzi e condizioni dell’offerta che riceverai.</p>' +
         '<div class="np"><button type="button" onclick="window.print()">Stampa o salva PDF</button></div>' +
         '<script>window.onload=function(){setTimeout(function(){try{window.print()}catch(e){}},400)}<\/script></body></html>');
-      const url = URL.createObjectURL(new Blob([w.document.h], { type: 'text/html' }));
-      const win = window.open(url, '_blank'); if (!win) location.href = url;
+      const H = w.document.h;
+      const css = H.slice(H.indexOf('<style>') + 7, H.indexOf('</style>'));
+      const body = H.slice(H.indexOf('<body>') + 6, H.lastIndexOf('<div class="np">'));
+      let g = document.getElementById('pv-g'); if (!g) { g = document.createElement('style'); g.id = 'pv-g'; document.head.appendChild(g); }
+      g.textContent = (css.match(/@font-face\{[^}]*\}/g) || []).join('') + '@page{size:A4;margin:0}html.pv,html.pv body{background:#000!important}html.pv body>*:not(#pv){display:none!important}';
+      const old = document.getElementById('pv'); if (old) old.remove();
+      const host = document.createElement('div'); host.id = 'pv'; document.body.appendChild(host);
+      const sr = host.attachShadow({ mode: 'open' });
+      sr.innerHTML = '<style>' + css.replace(/html,body\{/g, ':host{display:block;').replace(/body\{/g, '.pvb{') + '.np .c{background:none;color:#c4dfd8;border:1px solid #2f3f3a}</style><div class="pvb">' + body + '</div><div class="np"><button type="button" class="p">Stampa o salva PDF</button><button type="button" class="c">Chiudi</button></div>';
+      document.documentElement.classList.add('pv'); window.scrollTo(0, 0);
+      sr.querySelector('.p').addEventListener('click', () => window.print());
+      sr.querySelector('.c').addEventListener('click', () => { host.remove(); document.documentElement.classList.remove('pv'); });
+      setTimeout(() => { try { window.print(); } catch (e) {} }, 500);
     };
     const enc = (o) => { try { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); } catch (e) { return ''; } };
     const S = this.state, set = (o) => this.setState(o), mint = '#c4dfd8';
