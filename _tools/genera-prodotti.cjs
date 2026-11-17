@@ -78,7 +78,7 @@ function page(p) {
 <div style="margin-top: 28px; background: #111111; border: 1px solid #363636; border-radius: 16px; padding: 20px;">
 <div style="${mono}">ACQUISTO</div>
 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 8px;"><span>Apparato</span><b style="font-size: 22px;">${esc(price(p))}</b></div>
-${p.price ? '<div style="color: #8c8c8c; font-size: 12px;">Prezzo finale, nessun sovrapprezzo in fase d’ordine. Può variare con i listini dei produttori.</div>' : ''}
+${p.price ? '<div style="color: #8c8c8c; font-size: 12px;">Prezzo finale, nessun sovrapprezzo in fase d’ordine. Può variare con i listini dei produttori. <a href="/condizioni-generali/#in-breve" style="color: #c4dfd8;">Condizioni</a></div>' : ''}
 <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px;"><span>Configurazione</span><span style="color: #bdbdbd;">preventivo a parte</span></div>
 <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 14px;"><span>Monitoraggio e assistenza</span><span style="color: #bdbdbd;">canone su richiesta</span></div>
 </div>
