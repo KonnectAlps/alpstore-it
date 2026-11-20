@@ -16,7 +16,7 @@ const P = pick('P');
 const CATS = Object.fromEntries(pick('CATS'));
 // Vendita solo ad aziende e PA: nessun reso (Ezio, 16/11/2026). Le spese di spedizione dipendono dall'ordine: niente tariffa fissa nei dati.
 const RETURNS = { '@type': 'MerchantReturnPolicy', applicableCountry: 'IT', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted' };
-const BRAND = { UNIFI: 'UniFi', TELTONIKA: 'Teltonika', MIKROTIK: 'MikroTik', ZTE: 'ZTE' };
+const BRAND = { UNIFI: 'UniFi', TELTONIKA: 'Teltonika', MIKROTIK: 'MikroTik', ZTE: 'ZTE', 'GL.INET': 'GL.iNet' };
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const slug = (p) => `${BRAND[p.brand] || p.brand} ${p.n}`.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const img = (u, w) => (u && /cdn\.ecomm\.ui\.com/.test(u) ? `https://images.svc.ui.com/?u=${encodeURIComponent(u)}&w=${w}&q=75` : u);
